@@ -927,8 +927,13 @@ export interface ApiMobileLibraryMobileLibrary extends Schema.CollectionType {
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
-    sections: Attribute.Relation<
+    library_sections: Attribute.Relation<
       'api::mobile-library.mobile-library',
       'oneToMany',
       'api::section.section'
@@ -948,6 +953,12 @@ export interface ApiMobileLibraryMobileLibrary extends Schema.CollectionType {
       'admin::user'
     > &
       Attribute.Private;
+    localizations: Attribute.Relation<
+      'api::mobile-library.mobile-library',
+      'oneToMany',
+      'api::mobile-library.mobile-library'
+    >;
+    locale: Attribute.String;
   };
 }
 
@@ -966,6 +977,7 @@ export interface ApiSectionSection extends Schema.CollectionType {
     title: Attribute.String;
     order: Attribute.Integer;
     tileCollections: Attribute.Component<'shared.tile-collection', true>;
+    slug: Attribute.UID<'api::section.section', 'title'>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

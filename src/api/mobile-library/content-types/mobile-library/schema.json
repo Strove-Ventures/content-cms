@@ -10,9 +10,13 @@
   "options": {
     "draftAndPublish": true
   },
-  "pluginOptions": {},
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
   "attributes": {
-    "sections": {
+    "library_sections": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::section.section"
