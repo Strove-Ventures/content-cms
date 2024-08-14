@@ -1,8 +1,15 @@
 {
   "collectionName": "components_shared_tile_collections",
   "info": {
-    "displayName": "Tile collection"
+    "displayName": "Tile collection",
+    "description": ""
   },
   "options": {},
-  "attributes": {}
+  "attributes": {
+    "tiles": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.content-tile"
+    }
+  }
 }

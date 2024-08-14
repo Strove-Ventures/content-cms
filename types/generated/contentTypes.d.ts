@@ -956,7 +956,7 @@ export interface ApiSectionSection extends Schema.CollectionType {
   info: {
     singularName: 'section';
     pluralName: 'sections';
-    displayName: 'Library sections';
+    displayName: 'Library section';
     description: '';
   };
   options: {
@@ -965,6 +965,7 @@ export interface ApiSectionSection extends Schema.CollectionType {
   attributes: {
     title: Attribute.String;
     order: Attribute.Integer;
+    tileCollections: Attribute.Component<'shared.tile-collection', true>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

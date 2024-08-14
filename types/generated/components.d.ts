@@ -4,8 +4,11 @@ export interface SharedTileCollection extends Schema.Component {
   collectionName: 'components_shared_tile_collections';
   info: {
     displayName: 'Tile collection';
+    description: '';
   };
-  attributes: {};
+  attributes: {
+    tiles: Attribute.Component<'shared.content-tile', true>;
+  };
 }
 
 export interface SharedSlider extends Schema.Component {

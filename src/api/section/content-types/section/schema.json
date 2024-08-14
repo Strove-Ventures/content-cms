@@ -4,7 +4,7 @@
   "info": {
     "singularName": "section",
     "pluralName": "sections",
-    "displayName": "Library sections",
+    "displayName": "Library section",
     "description": ""
   },
   "options": {
@@ -17,6 +17,11 @@
     },
     "order": {
       "type": "integer"
+    },
+    "tileCollections": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.tile-collection"
     }
   }
 }
