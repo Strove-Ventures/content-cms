@@ -12,7 +12,7 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "name": {
+    "first_name": {
       "type": "string"
     },
     "avatar": {
@@ -25,14 +25,20 @@
         "videos"
       ]
     },
-    "email": {
-      "type": "string"
-    },
     "articles": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::article.article",
       "mappedBy": "author"
+    },
+    "last_name": {
+      "type": "string"
+    },
+    "social_profile": {
+      "type": "string"
+    },
+    "user_id": {
+      "type": "uid"
     }
   }
 }

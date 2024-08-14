@@ -26,6 +26,9 @@
     },
     "description": {
       "type": "text"
+    },
+    "order": {
+      "type": "integer"
     }
   }
 }
