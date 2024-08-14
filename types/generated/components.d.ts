@@ -1,5 +1,13 @@
 import type { Schema, Attribute } from '@strapi/strapi';
 
+export interface SharedTileCollection extends Schema.Component {
+  collectionName: 'components_shared_tile_collections';
+  info: {
+    displayName: 'Tile collection';
+  };
+  attributes: {};
+}
+
 export interface SharedSlider extends Schema.Component {
   collectionName: 'components_shared_sliders';
   info: {
@@ -72,7 +80,7 @@ export interface SharedContentTile extends Schema.Component {
     title: Attribute.String;
     tile_type: Attribute.String;
     length: Attribute.Decimal;
-    background_image: Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    image_url: Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     earnable: Attribute.Boolean;
     earnable_value: Attribute.Integer;
     tags: Attribute.Relation<
@@ -93,6 +101,7 @@ export interface SharedContentTile extends Schema.Component {
 declare module '@strapi/types' {
   export module Shared {
     export interface Components {
+      'shared.tile-collection': SharedTileCollection;
       'shared.slider': SharedSlider;
       'shared.seo': SharedSeo;
       'shared.rich-text': SharedRichText;

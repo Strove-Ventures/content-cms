@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "sections",
+  "info": {
+    "singularName": "section",
+    "pluralName": "sections",
+    "displayName": "Section",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "SectionContent": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.content-tile"
+    },
+    "title": {
+      "type": "string"
+    },
+    "order": {
+      "type": "integer"
+    }
+  }
+}

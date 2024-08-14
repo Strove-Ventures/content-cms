@@ -15,7 +15,7 @@
     "length": {
       "type": "decimal"
     },
-    "background_image": {
+    "image_url": {
       "type": "media",
       "multiple": false,
       "required": false,

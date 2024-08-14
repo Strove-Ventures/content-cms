@@ -1,0 +1,21 @@
+{
+  "kind": "collectionType",
+  "collectionName": "mobile_libraries",
+  "info": {
+    "singularName": "mobile-library",
+    "pluralName": "mobile-libraries",
+    "displayName": "Library",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "sections": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::section.section"
+    }
+  }
+}
