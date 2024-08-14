@@ -1,0 +1,47 @@
+{
+  "collectionName": "components_shared_content_tiles",
+  "info": {
+    "displayName": "content tile",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "tile_type": {
+      "type": "string"
+    },
+    "length": {
+      "type": "decimal"
+    },
+    "background_image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "display_points": {
+      "type": "boolean"
+    },
+    "earnable_value": {
+      "type": "integer"
+    },
+    "tags": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::tag.tag"
+    },
+    "short_description": {
+      "type": "string"
+    },
+    "action": {
+      "type": "string"
+    }
+  }
+}

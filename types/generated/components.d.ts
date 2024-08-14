@@ -62,6 +62,29 @@ export interface SharedMedia extends Schema.Component {
   };
 }
 
+export interface SharedContentTile extends Schema.Component {
+  collectionName: 'components_shared_content_tiles';
+  info: {
+    displayName: 'content tile';
+    description: '';
+  };
+  attributes: {
+    title: Attribute.String;
+    tile_type: Attribute.String;
+    length: Attribute.Decimal;
+    background_image: Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    display_points: Attribute.Boolean;
+    earnable_value: Attribute.Integer;
+    tags: Attribute.Relation<
+      'shared.content-tile',
+      'oneToMany',
+      'api::tag.tag'
+    >;
+    short_description: Attribute.String;
+    action: Attribute.String;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface Components {
@@ -70,6 +93,7 @@ declare module '@strapi/types' {
       'shared.rich-text': SharedRichText;
       'shared.quote': SharedQuote;
       'shared.media': SharedMedia;
+      'shared.content-tile': SharedContentTile;
     }
   }
 }
