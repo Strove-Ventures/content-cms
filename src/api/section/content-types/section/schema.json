@@ -18,14 +18,14 @@
     "order": {
       "type": "integer"
     },
-    "tileCollections": {
-      "type": "component",
-      "repeatable": true,
-      "component": "shared.tile-collection"
-    },
     "slug": {
       "type": "uid",
       "targetField": "title"
+    },
+    "tileCollection": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.content-tile"
     }
   }
 }

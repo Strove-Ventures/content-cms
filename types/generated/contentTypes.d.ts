@@ -916,52 +916,6 @@ export interface ApiCategoryCategory extends Schema.CollectionType {
   };
 }
 
-export interface ApiMobileLibraryMobileLibrary extends Schema.CollectionType {
-  collectionName: 'mobile_libraries';
-  info: {
-    singularName: 'mobile-library';
-    pluralName: 'mobile-libraries';
-    displayName: 'Library';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  pluginOptions: {
-    i18n: {
-      localized: true;
-    };
-  };
-  attributes: {
-    library_sections: Attribute.Relation<
-      'api::mobile-library.mobile-library',
-      'oneToMany',
-      'api::section.section'
-    >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::mobile-library.mobile-library',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::mobile-library.mobile-library',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    localizations: Attribute.Relation<
-      'api::mobile-library.mobile-library',
-      'oneToMany',
-      'api::mobile-library.mobile-library'
-    >;
-    locale: Attribute.String;
-  };
-}
-
 export interface ApiSectionSection extends Schema.CollectionType {
   collectionName: 'sections';
   info: {
@@ -976,8 +930,8 @@ export interface ApiSectionSection extends Schema.CollectionType {
   attributes: {
     title: Attribute.String;
     order: Attribute.Integer;
-    tileCollections: Attribute.Component<'shared.tile-collection', true>;
     slug: Attribute.UID<'api::section.section', 'title'>;
+    tileCollection: Attribute.Component<'shared.content-tile', true>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1042,7 +996,6 @@ declare module '@strapi/types' {
       'api::article.article': ApiArticleArticle;
       'api::author.author': ApiAuthorAuthor;
       'api::category.category': ApiCategoryCategory;
-      'api::mobile-library.mobile-library': ApiMobileLibraryMobileLibrary;
       'api::section.section': ApiSectionSection;
       'api::tag.tag': ApiTagTag;
     }
