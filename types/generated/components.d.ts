@@ -73,7 +73,7 @@ export interface SharedContentTile extends Schema.Component {
     tile_type: Attribute.String;
     length: Attribute.Decimal;
     background_image: Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
-    display_points: Attribute.Boolean;
+    earnable: Attribute.Boolean;
     earnable_value: Attribute.Integer;
     tags: Attribute.Relation<
       'shared.content-tile',
@@ -82,6 +82,11 @@ export interface SharedContentTile extends Schema.Component {
     >;
     short_description: Attribute.String;
     action: Attribute.String;
+    author: Attribute.Relation<
+      'shared.content-tile',
+      'oneToOne',
+      'api::author.author'
+    >;
   };
 }
 

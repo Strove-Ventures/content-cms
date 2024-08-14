@@ -26,7 +26,7 @@
         "audios"
       ]
     },
-    "display_points": {
+    "earnable": {
       "type": "boolean"
     },
     "earnable_value": {
@@ -42,6 +42,11 @@
     },
     "action": {
       "type": "string"
+    },
+    "author": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::author.author"
     }
   }
 }
