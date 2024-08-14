@@ -1,25 +1,29 @@
 import type { Schema, Attribute } from '@strapi/strapi';
 
-export interface SharedMedia extends Schema.Component {
-  collectionName: 'components_shared_media';
+export interface SharedSlider extends Schema.Component {
+  collectionName: 'components_shared_sliders';
   info: {
-    displayName: 'Media';
-    icon: 'file-video';
+    displayName: 'Slider';
+    icon: 'address-book';
+    description: '';
   };
   attributes: {
-    file: Attribute.Media;
+    files: Attribute.Media<'images', true>;
   };
 }
 
-export interface SharedQuote extends Schema.Component {
-  collectionName: 'components_shared_quotes';
+export interface SharedSeo extends Schema.Component {
+  collectionName: 'components_shared_seos';
   info: {
-    displayName: 'Quote';
-    icon: 'indent';
+    name: 'Seo';
+    icon: 'allergies';
+    displayName: 'Seo';
+    description: '';
   };
   attributes: {
-    title: Attribute.String;
-    body: Attribute.Text;
+    metaTitle: Attribute.String & Attribute.Required;
+    metaDescription: Attribute.Text & Attribute.Required;
+    shareImage: Attribute.Media<'images'>;
   };
 }
 
@@ -35,41 +39,37 @@ export interface SharedRichText extends Schema.Component {
   };
 }
 
-export interface SharedSeo extends Schema.Component {
-  collectionName: 'components_shared_seos';
+export interface SharedQuote extends Schema.Component {
+  collectionName: 'components_shared_quotes';
   info: {
-    name: 'Seo';
-    icon: 'allergies';
-    displayName: 'Seo';
-    description: '';
+    displayName: 'Quote';
+    icon: 'indent';
   };
   attributes: {
-    metaTitle: Attribute.String & Attribute.Required;
-    metaDescription: Attribute.Text & Attribute.Required;
-    shareImage: Attribute.Media;
+    title: Attribute.String;
+    body: Attribute.Text;
   };
 }
 
-export interface SharedSlider extends Schema.Component {
-  collectionName: 'components_shared_sliders';
+export interface SharedMedia extends Schema.Component {
+  collectionName: 'components_shared_media';
   info: {
-    displayName: 'Slider';
-    icon: 'address-book';
-    description: '';
+    displayName: 'Media';
+    icon: 'file-video';
   };
   attributes: {
-    files: Attribute.Media;
+    file: Attribute.Media<'images' | 'files' | 'videos'>;
   };
 }
 
 declare module '@strapi/types' {
   export module Shared {
     export interface Components {
-      'shared.media': SharedMedia;
-      'shared.quote': SharedQuote;
-      'shared.rich-text': SharedRichText;
-      'shared.seo': SharedSeo;
       'shared.slider': SharedSlider;
+      'shared.seo': SharedSeo;
+      'shared.rich-text': SharedRichText;
+      'shared.quote': SharedQuote;
+      'shared.media': SharedMedia;
     }
   }
 }
