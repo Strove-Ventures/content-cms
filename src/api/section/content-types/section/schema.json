@@ -4,7 +4,7 @@
   "info": {
     "singularName": "section",
     "pluralName": "sections",
-    "displayName": "Section",
+    "displayName": "Library sections",
     "description": ""
   },
   "options": {
@@ -12,11 +12,6 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "SectionContent": {
-      "type": "component",
-      "repeatable": true,
-      "component": "shared.content-tile"
-    },
     "title": {
       "type": "string"
     },

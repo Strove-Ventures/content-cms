@@ -956,14 +956,13 @@ export interface ApiSectionSection extends Schema.CollectionType {
   info: {
     singularName: 'section';
     pluralName: 'sections';
-    displayName: 'Section';
+    displayName: 'Library sections';
     description: '';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    SectionContent: Attribute.Component<'shared.content-tile', true>;
     title: Attribute.String;
     order: Attribute.Integer;
     createdAt: Attribute.DateTime;
