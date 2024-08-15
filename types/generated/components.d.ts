@@ -78,10 +78,11 @@ export interface SharedDuration extends Schema.Component {
   info: {
     displayName: 'Duration';
     icon: 'clock';
+    description: '';
   };
   attributes: {
     duration: Attribute.String;
-    icon_url: Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    icon: Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
   };
 }
 

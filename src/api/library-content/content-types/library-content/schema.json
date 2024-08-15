@@ -13,14 +13,21 @@
   "pluginOptions": {},
   "attributes": {
     "title": {
-      "type": "string"
+      "type": "string",
+      "required": true,
+      "maxLength": 200,
+      "minLength": 2
     },
     "slug": {
       "type": "uid",
-      "targetField": "title"
+      "targetField": "title",
+      "required": true,
+      "minLength": 2,
+      "maxLength": 128
     },
     "description_short": {
-      "type": "string"
+      "type": "string",
+      "required": false
     },
     "description_long": {
       "type": "text"
@@ -28,7 +35,7 @@
     "cover": {
       "type": "media",
       "multiple": false,
-      "required": false,
+      "required": true,
       "allowedTypes": [
         "images",
         "files",
@@ -46,7 +53,8 @@
       "components": [
         "shared.rich-text",
         "shared.media",
-        "shared.actions"
+        "shared.actions",
+        "shared.slider"
       ]
     },
     "tags": {
@@ -64,6 +72,9 @@
       "type": "component",
       "repeatable": false,
       "component": "shared.duration"
+    },
+    "view_count": {
+      "type": "biginteger"
     }
   }
 }

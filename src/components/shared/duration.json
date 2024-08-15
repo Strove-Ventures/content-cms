@@ -2,22 +2,24 @@
   "collectionName": "components_shared_durations",
   "info": {
     "displayName": "Duration",
-    "icon": "clock"
+    "icon": "clock",
+    "description": ""
   },
   "options": {},
   "attributes": {
     "duration": {
       "type": "string"
     },
-    "icon_url": {
+    "icon": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
     }
   }
 }

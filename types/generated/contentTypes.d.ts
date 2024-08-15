@@ -923,18 +923,29 @@ export interface ApiLibraryContentLibraryContent extends Schema.CollectionType {
     draftAndPublish: true;
   };
   attributes: {
-    title: Attribute.String;
-    slug: Attribute.UID<'api::library-content.library-content', 'title'>;
+    title: Attribute.String &
+      Attribute.Required &
+      Attribute.SetMinMaxLength<{
+        minLength: 2;
+        maxLength: 200;
+      }>;
+    slug: Attribute.UID<'api::library-content.library-content', 'title'> &
+      Attribute.Required &
+      Attribute.SetMinMaxLength<{
+        minLength: 2;
+        maxLength: 128;
+      }>;
     description_short: Attribute.String;
     description_long: Attribute.Text;
-    cover: Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    cover: Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
+      Attribute.Required;
     author: Attribute.Relation<
       'api::library-content.library-content',
       'oneToOne',
       'api::author.author'
     >;
     body: Attribute.DynamicZone<
-      ['shared.rich-text', 'shared.media', 'shared.actions']
+      ['shared.rich-text', 'shared.media', 'shared.actions', 'shared.slider']
     >;
     tags: Attribute.Relation<
       'api::library-content.library-content',
@@ -947,6 +958,7 @@ export interface ApiLibraryContentLibraryContent extends Schema.CollectionType {
       'api::category.category'
     >;
     duration: Attribute.Component<'shared.duration'>;
+    view_count: Attribute.BigInteger;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
