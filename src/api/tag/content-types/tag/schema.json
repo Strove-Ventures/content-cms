@@ -4,18 +4,15 @@
   "info": {
     "singularName": "tag",
     "pluralName": "tags",
-    "displayName": "Tags"
+    "displayName": "Tags",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
   },
   "pluginOptions": {},
   "attributes": {
-    "code": {
-      "type": "uid",
-      "required": true
-    },
-    "hex_code": {
+    "primary_hex": {
       "type": "string"
     },
     "name": {
@@ -24,6 +21,9 @@
       "unique": true
     },
     "description": {
+      "type": "string"
+    },
+    "secondary_hex": {
       "type": "string"
     }
   }

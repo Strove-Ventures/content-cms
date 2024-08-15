@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_shared_actions",
+  "info": {
+    "displayName": "Actions",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "action_type": {
+      "type": "string"
+    },
+    "action_label": {
+      "type": "string"
+    },
+    "action_url": {
+      "type": "string"
+    }
+  }
+}

@@ -101,6 +101,19 @@ export interface SharedContentTile extends Schema.Component {
   };
 }
 
+export interface SharedActions extends Schema.Component {
+  collectionName: 'components_shared_actions';
+  info: {
+    displayName: 'Actions';
+    description: '';
+  };
+  attributes: {
+    action_type: Attribute.String;
+    action_label: Attribute.String;
+    action_url: Attribute.String;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface Components {
@@ -111,6 +124,7 @@ declare module '@strapi/types' {
       'shared.quote': SharedQuote;
       'shared.media': SharedMedia;
       'shared.content-tile': SharedContentTile;
+      'shared.actions': SharedActions;
     }
   }
 }

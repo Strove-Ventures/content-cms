@@ -916,12 +916,12 @@ export interface ApiCategoryCategory extends Schema.CollectionType {
   };
 }
 
-export interface ApiSectionSection extends Schema.CollectionType {
-  collectionName: 'sections';
+export interface ApiLibraryContentLibraryContent extends Schema.CollectionType {
+  collectionName: 'library_contents';
   info: {
-    singularName: 'section';
-    pluralName: 'sections';
-    displayName: 'Library section';
+    singularName: 'library-content';
+    pluralName: 'library-contents';
+    displayName: 'Library Content';
     description: '';
   };
   options: {
@@ -929,20 +929,35 @@ export interface ApiSectionSection extends Schema.CollectionType {
   };
   attributes: {
     title: Attribute.String;
-    order: Attribute.Integer;
-    slug: Attribute.UID<'api::section.section', 'title'>;
-    tileCollection: Attribute.Component<'shared.content-tile', true>;
+    slug: Attribute.UID<'api::library-content.library-content', 'title'>;
+    short_description: Attribute.String;
+    description: Attribute.Text;
+    cover: Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    length: Attribute.Integer;
+    author: Attribute.Relation<
+      'api::library-content.library-content',
+      'oneToOne',
+      'api::author.author'
+    >;
+    body: Attribute.DynamicZone<
+      ['shared.rich-text', 'shared.media', 'shared.actions']
+    >;
+    tags: Attribute.Relation<
+      'api::library-content.library-content',
+      'oneToMany',
+      'api::tag.tag'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
-      'api::section.section',
+      'api::library-content.library-content',
       'oneToOne',
       'admin::user'
     > &
       Attribute.Private;
     updatedBy: Attribute.Relation<
-      'api::section.section',
+      'api::library-content.library-content',
       'oneToOne',
       'admin::user'
     > &
@@ -956,15 +971,16 @@ export interface ApiTagTag extends Schema.CollectionType {
     singularName: 'tag';
     pluralName: 'tags';
     displayName: 'Tags';
+    description: '';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    code: Attribute.UID & Attribute.Required;
-    hex_code: Attribute.String;
+    primary_hex: Attribute.String;
     name: Attribute.String & Attribute.Required & Attribute.Unique;
     description: Attribute.String;
+    secondary_hex: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -996,7 +1012,7 @@ declare module '@strapi/types' {
       'api::article.article': ApiArticleArticle;
       'api::author.author': ApiAuthorAuthor;
       'api::category.category': ApiCategoryCategory;
-      'api::section.section': ApiSectionSection;
+      'api::library-content.library-content': ApiLibraryContentLibraryContent;
       'api::tag.tag': ApiTagTag;
     }
   }

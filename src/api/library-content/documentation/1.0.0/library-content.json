@@ -1,5 +1,5 @@
 {
-  "/sections": {
+  "/library-contents": {
     "get": {
       "responses": {
         "200": {
@@ -7,7 +7,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/SectionListResponse"
+                "$ref": "#/components/schemas/LibraryContentListResponse"
               }
             }
           }
@@ -64,7 +64,7 @@
         }
       },
       "tags": [
-        "Section"
+        "Library-content"
       ],
       "parameters": [
         {
@@ -170,7 +170,7 @@
           }
         }
       ],
-      "operationId": "get/sections"
+      "operationId": "get/library-contents"
     },
     "post": {
       "responses": {
@@ -179,7 +179,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/SectionResponse"
+                "$ref": "#/components/schemas/LibraryContentResponse"
               }
             }
           }
@@ -236,23 +236,23 @@
         }
       },
       "tags": [
-        "Section"
+        "Library-content"
       ],
       "parameters": [],
-      "operationId": "post/sections",
+      "operationId": "post/library-contents",
       "requestBody": {
         "required": true,
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/components/schemas/SectionRequest"
+              "$ref": "#/components/schemas/LibraryContentRequest"
             }
           }
         }
       }
     }
   },
-  "/sections/{id}": {
+  "/library-contents/{id}": {
     "get": {
       "responses": {
         "200": {
@@ -260,7 +260,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/SectionResponse"
+                "$ref": "#/components/schemas/LibraryContentResponse"
               }
             }
           }
@@ -317,7 +317,7 @@
         }
       },
       "tags": [
-        "Section"
+        "Library-content"
       ],
       "parameters": [
         {
@@ -331,7 +331,7 @@
           }
         }
       ],
-      "operationId": "get/sections/{id}"
+      "operationId": "get/library-contents/{id}"
     },
     "put": {
       "responses": {
@@ -340,7 +340,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/SectionResponse"
+                "$ref": "#/components/schemas/LibraryContentResponse"
               }
             }
           }
@@ -397,7 +397,7 @@
         }
       },
       "tags": [
-        "Section"
+        "Library-content"
       ],
       "parameters": [
         {
@@ -411,13 +411,13 @@
           }
         }
       ],
-      "operationId": "put/sections/{id}",
+      "operationId": "put/library-contents/{id}",
       "requestBody": {
         "required": true,
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/components/schemas/SectionRequest"
+              "$ref": "#/components/schemas/LibraryContentRequest"
             }
           }
         }
@@ -488,7 +488,7 @@
         }
       },
       "tags": [
-        "Section"
+        "Library-content"
       ],
       "parameters": [
         {
@@ -502,7 +502,7 @@
           }
         }
       ],
-      "operationId": "delete/sections/{id}"
+      "operationId": "delete/library-contents/{id}"
     }
   }
 }

@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2024-08-14T21:49:12.935Z"
+    "x-generation-date": "2024-08-15T13:04:51.210Z"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -5377,7 +5377,7 @@
           }
         }
       },
-      "SectionRequest": {
+      "LibraryContentRequest": {
         "type": "object",
         "required": [
           "data"
@@ -5389,40 +5389,92 @@
               "title": {
                 "type": "string"
               },
-              "order": {
-                "type": "integer"
-              },
               "slug": {
                 "type": "string"
               },
-              "tileCollection": {
+              "short_description": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "cover": {
+                "oneOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "string"
+                  }
+                ],
+                "example": "string or id"
+              },
+              "length": {
+                "type": "integer"
+              },
+              "author": {
+                "oneOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "string"
+                  }
+                ],
+                "example": "string or id"
+              },
+              "body": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/components/schemas/SharedContentTileComponent"
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/SharedRichTextComponent"
+                    },
+                    {
+                      "$ref": "#/components/schemas/SharedMediaComponent"
+                    },
+                    {
+                      "$ref": "#/components/schemas/SharedActionsComponent"
+                    }
+                  ]
+                }
+              },
+              "tags": {
+                "type": "array",
+                "items": {
+                  "oneOf": [
+                    {
+                      "type": "integer"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ],
+                  "example": "string or id"
                 }
               }
             }
           }
         }
       },
-      "SectionListResponseDataItem": {
+      "LibraryContentListResponseDataItem": {
         "type": "object",
         "properties": {
           "id": {
             "type": "number"
           },
           "attributes": {
-            "$ref": "#/components/schemas/Section"
+            "$ref": "#/components/schemas/LibraryContent"
           }
         }
       },
-      "SectionListResponse": {
+      "LibraryContentListResponse": {
         "type": "object",
         "properties": {
           "data": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/SectionListResponseDataItem"
+              "$ref": "#/components/schemas/LibraryContentListResponseDataItem"
             }
           },
           "meta": {
@@ -5451,111 +5503,22 @@
           }
         }
       },
-      "Section": {
+      "LibraryContent": {
         "type": "object",
         "properties": {
           "title": {
             "type": "string"
-          },
-          "order": {
-            "type": "integer"
           },
           "slug": {
             "type": "string"
           },
-          "tileCollection": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/SharedContentTileComponent"
-            }
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updatedAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "publishedAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "object",
-            "properties": {
-              "data": {
-                "type": "object",
-                "properties": {
-                  "id": {
-                    "type": "number"
-                  },
-                  "attributes": {
-                    "type": "object",
-                    "properties": {}
-                  }
-                }
-              }
-            }
-          },
-          "updatedBy": {
-            "type": "object",
-            "properties": {
-              "data": {
-                "type": "object",
-                "properties": {
-                  "id": {
-                    "type": "number"
-                  },
-                  "attributes": {
-                    "type": "object",
-                    "properties": {}
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "SectionResponseDataObject": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "number"
-          },
-          "attributes": {
-            "$ref": "#/components/schemas/Section"
-          }
-        }
-      },
-      "SectionResponse": {
-        "type": "object",
-        "properties": {
-          "data": {
-            "$ref": "#/components/schemas/SectionResponseDataObject"
-          },
-          "meta": {
-            "type": "object"
-          }
-        }
-      },
-      "SharedContentTileComponent": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "number"
-          },
-          "title": {
+          "short_description": {
             "type": "string"
           },
-          "tile_type": {
+          "description": {
             "type": "string"
           },
-          "length": {
-            "type": "number",
-            "format": "float"
-          },
-          "image_url": {
+          "cover": {
             "type": "object",
             "properties": {
               "data": {
@@ -6177,96 +6140,8 @@
               }
             }
           },
-          "earnable": {
-            "type": "boolean"
-          },
-          "earnable_value": {
+          "length": {
             "type": "integer"
-          },
-          "tags": {
-            "type": "object",
-            "properties": {
-              "data": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "id": {
-                      "type": "number"
-                    },
-                    "attributes": {
-                      "type": "object",
-                      "properties": {
-                        "code": {
-                          "type": "string"
-                        },
-                        "hex_code": {
-                          "type": "string"
-                        },
-                        "name": {
-                          "type": "string"
-                        },
-                        "description": {
-                          "type": "string"
-                        },
-                        "createdAt": {
-                          "type": "string",
-                          "format": "date-time"
-                        },
-                        "updatedAt": {
-                          "type": "string",
-                          "format": "date-time"
-                        },
-                        "publishedAt": {
-                          "type": "string",
-                          "format": "date-time"
-                        },
-                        "createdBy": {
-                          "type": "object",
-                          "properties": {
-                            "data": {
-                              "type": "object",
-                              "properties": {
-                                "id": {
-                                  "type": "number"
-                                },
-                                "attributes": {
-                                  "type": "object",
-                                  "properties": {}
-                                }
-                              }
-                            }
-                          }
-                        },
-                        "updatedBy": {
-                          "type": "object",
-                          "properties": {
-                            "data": {
-                              "type": "object",
-                              "properties": {
-                                "id": {
-                                  "type": "number"
-                                },
-                                "attributes": {
-                                  "type": "object",
-                                  "properties": {}
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "short_description": {
-            "type": "string"
-          },
-          "action": {
-            "type": "string"
           },
           "author": {
             "type": "object",
@@ -7146,6 +7021,189 @@
                 }
               }
             }
+          },
+          "body": {
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/SharedRichTextComponent"
+                },
+                {
+                  "$ref": "#/components/schemas/SharedMediaComponent"
+                },
+                {
+                  "$ref": "#/components/schemas/SharedActionsComponent"
+                }
+              ]
+            }
+          },
+          "tags": {
+            "type": "object",
+            "properties": {
+              "data": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "number"
+                    },
+                    "attributes": {
+                      "type": "object",
+                      "properties": {
+                        "primary_hex": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "secondary_hex": {
+                          "type": "string"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "updatedAt": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "publishedAt": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "createdBy": {
+                          "type": "object",
+                          "properties": {
+                            "data": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "number"
+                                },
+                                "attributes": {
+                                  "type": "object",
+                                  "properties": {}
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "updatedBy": {
+                          "type": "object",
+                          "properties": {
+                            "data": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "number"
+                                },
+                                "attributes": {
+                                  "type": "object",
+                                  "properties": {}
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "publishedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "object",
+            "properties": {
+              "data": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "number"
+                  },
+                  "attributes": {
+                    "type": "object",
+                    "properties": {}
+                  }
+                }
+              }
+            }
+          },
+          "updatedBy": {
+            "type": "object",
+            "properties": {
+              "data": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "number"
+                  },
+                  "attributes": {
+                    "type": "object",
+                    "properties": {}
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "LibraryContentResponseDataObject": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "attributes": {
+            "$ref": "#/components/schemas/LibraryContent"
+          }
+        }
+      },
+      "LibraryContentResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/LibraryContentResponseDataObject"
+          },
+          "meta": {
+            "type": "object"
+          }
+        }
+      },
+      "SharedActionsComponent": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "__component": {
+            "type": "string"
+          },
+          "action_type": {
+            "type": "string"
+          },
+          "action_label": {
+            "type": "string"
+          },
+          "action_url": {
+            "type": "string"
           }
         }
       },
@@ -7157,21 +7215,20 @@
         "properties": {
           "data": {
             "required": [
-              "code",
               "name"
             ],
             "type": "object",
             "properties": {
-              "code": {
-                "type": "string"
-              },
-              "hex_code": {
+              "primary_hex": {
                 "type": "string"
               },
               "name": {
                 "type": "string"
               },
               "description": {
+                "type": "string"
+              },
+              "secondary_hex": {
                 "type": "string"
               }
             }
@@ -7227,20 +7284,19 @@
       "Tag": {
         "type": "object",
         "required": [
-          "code",
           "name"
         ],
         "properties": {
-          "code": {
-            "type": "string"
-          },
-          "hex_code": {
+          "primary_hex": {
             "type": "string"
           },
           "name": {
             "type": "string"
           },
           "description": {
+            "type": "string"
+          },
+          "secondary_hex": {
             "type": "string"
           },
           "createdAt": {
@@ -9291,7 +9347,7 @@
         "operationId": "delete/categories/{id}"
       }
     },
-    "/sections": {
+    "/library-contents": {
       "get": {
         "responses": {
           "200": {
@@ -9299,7 +9355,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/SectionListResponse"
+                  "$ref": "#/components/schemas/LibraryContentListResponse"
                 }
               }
             }
@@ -9356,7 +9412,7 @@
           }
         },
         "tags": [
-          "Section"
+          "Library-content"
         ],
         "parameters": [
           {
@@ -9462,7 +9518,7 @@
             }
           }
         ],
-        "operationId": "get/sections"
+        "operationId": "get/library-contents"
       },
       "post": {
         "responses": {
@@ -9471,7 +9527,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/SectionResponse"
+                  "$ref": "#/components/schemas/LibraryContentResponse"
                 }
               }
             }
@@ -9528,23 +9584,23 @@
           }
         },
         "tags": [
-          "Section"
+          "Library-content"
         ],
         "parameters": [],
-        "operationId": "post/sections",
+        "operationId": "post/library-contents",
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/SectionRequest"
+                "$ref": "#/components/schemas/LibraryContentRequest"
               }
             }
           }
         }
       }
     },
-    "/sections/{id}": {
+    "/library-contents/{id}": {
       "get": {
         "responses": {
           "200": {
@@ -9552,7 +9608,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/SectionResponse"
+                  "$ref": "#/components/schemas/LibraryContentResponse"
                 }
               }
             }
@@ -9609,7 +9665,7 @@
           }
         },
         "tags": [
-          "Section"
+          "Library-content"
         ],
         "parameters": [
           {
@@ -9623,7 +9679,7 @@
             }
           }
         ],
-        "operationId": "get/sections/{id}"
+        "operationId": "get/library-contents/{id}"
       },
       "put": {
         "responses": {
@@ -9632,7 +9688,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/SectionResponse"
+                  "$ref": "#/components/schemas/LibraryContentResponse"
                 }
               }
             }
@@ -9689,7 +9745,7 @@
           }
         },
         "tags": [
-          "Section"
+          "Library-content"
         ],
         "parameters": [
           {
@@ -9703,13 +9759,13 @@
             }
           }
         ],
-        "operationId": "put/sections/{id}",
+        "operationId": "put/library-contents/{id}",
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/SectionRequest"
+                "$ref": "#/components/schemas/LibraryContentRequest"
               }
             }
           }
@@ -9780,7 +9836,7 @@
           }
         },
         "tags": [
-          "Section"
+          "Library-content"
         ],
         "parameters": [
           {
@@ -9794,7 +9850,7 @@
             }
           }
         ],
-        "operationId": "delete/sections/{id}"
+        "operationId": "delete/library-contents/{id}"
       }
     },
     "/tags": {
