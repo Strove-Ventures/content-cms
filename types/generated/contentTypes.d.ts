@@ -977,6 +977,53 @@ export interface ApiLibraryContentLibraryContent extends Schema.CollectionType {
   };
 }
 
+export interface ApiMobileLibraryMobileLibrary extends Schema.SingleType {
+  collectionName: 'mobile_libraries';
+  info: {
+    singularName: 'mobile-library';
+    pluralName: 'mobile-libraries';
+    displayName: 'Mobile Library';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
+  attributes: {
+    sections: Attribute.Component<'shared.library-section', true> &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::mobile-library.mobile-library',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::mobile-library.mobile-library',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    localizations: Attribute.Relation<
+      'api::mobile-library.mobile-library',
+      'oneToMany',
+      'api::mobile-library.mobile-library'
+    >;
+    locale: Attribute.String;
+  };
+}
+
 export interface ApiTagTag extends Schema.CollectionType {
   collectionName: 'tags';
   info: {
@@ -1026,6 +1073,7 @@ declare module '@strapi/types' {
       'api::author.author': ApiAuthorAuthor;
       'api::category.category': ApiCategoryCategory;
       'api::library-content.library-content': ApiLibraryContentLibraryContent;
+      'api::mobile-library.mobile-library': ApiMobileLibraryMobileLibrary;
       'api::tag.tag': ApiTagTag;
     }
   }

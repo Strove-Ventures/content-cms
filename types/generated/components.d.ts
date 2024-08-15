@@ -7,7 +7,7 @@ export interface SharedTileCollection extends Schema.Component {
     description: '';
   };
   attributes: {
-    tiles: Attribute.Component<'shared.content-tile', true>;
+    tiles: Attribute.Component<'shared.content-tile'>;
   };
 }
 
@@ -73,6 +73,19 @@ export interface SharedMedia extends Schema.Component {
   };
 }
 
+export interface SharedLibrarySection extends Schema.Component {
+  collectionName: 'components_shared_library_sections';
+  info: {
+    displayName: 'Library section';
+    description: '';
+  };
+  attributes: {
+    tiles: Attribute.Component<'shared.content-tile', true>;
+    order: Attribute.Integer;
+    title: Attribute.String;
+  };
+}
+
 export interface SharedDuration extends Schema.Component {
   collectionName: 'components_shared_durations';
   info: {
@@ -93,23 +106,10 @@ export interface SharedContentTile extends Schema.Component {
     description: '';
   };
   attributes: {
-    title: Attribute.String;
-    tile_type: Attribute.String;
-    length: Attribute.Decimal;
-    image_url: Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
-    earnable: Attribute.Boolean;
-    earnable_value: Attribute.Integer;
-    tags: Attribute.Relation<
+    library_contents: Attribute.Relation<
       'shared.content-tile',
       'oneToMany',
-      'api::tag.tag'
-    >;
-    short_description: Attribute.String;
-    action: Attribute.String;
-    author: Attribute.Relation<
-      'shared.content-tile',
-      'oneToOne',
-      'api::author.author'
+      'api::library-content.library-content'
     >;
   };
 }
@@ -136,6 +136,7 @@ declare module '@strapi/types' {
       'shared.rich-text': SharedRichText;
       'shared.quote': SharedQuote;
       'shared.media': SharedMedia;
+      'shared.library-section': SharedLibrarySection;
       'shared.duration': SharedDuration;
       'shared.content-tile': SharedContentTile;
       'shared.actions': SharedActions;

@@ -6,47 +6,10 @@
   },
   "options": {},
   "attributes": {
-    "title": {
-      "type": "string"
-    },
-    "tile_type": {
-      "type": "string"
-    },
-    "length": {
-      "type": "decimal"
-    },
-    "image_url": {
-      "type": "media",
-      "multiple": false,
-      "required": false,
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ]
-    },
-    "earnable": {
-      "type": "boolean"
-    },
-    "earnable_value": {
-      "type": "integer"
-    },
-    "tags": {
+    "library_contents": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::tag.tag"
-    },
-    "short_description": {
-      "type": "string"
-    },
-    "action": {
-      "type": "string"
-    },
-    "author": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::author.author"
+      "target": "api::library-content.library-content"
     }
   }
 }

@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_shared_library_sections",
+  "info": {
+    "displayName": "Library section",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "tiles": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.content-tile"
+    },
+    "order": {
+      "type": "integer"
+    },
+    "title": {
+      "type": "string"
+    }
+  }
+}
