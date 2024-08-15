@@ -12,7 +12,7 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "primary_hex": {
+    "primary_colour": {
       "type": "string"
     },
     "name": {
@@ -23,7 +23,10 @@
     "description": {
       "type": "string"
     },
-    "secondary_hex": {
+    "secondary_colour": {
+      "type": "string"
+    },
+    "label_colour": {
       "type": "string"
     }
   }

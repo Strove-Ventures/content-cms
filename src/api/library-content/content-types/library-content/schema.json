@@ -19,10 +19,10 @@
       "type": "uid",
       "targetField": "title"
     },
-    "short_description": {
+    "description_short": {
       "type": "string"
     },
-    "description": {
+    "description_long": {
       "type": "text"
     },
     "cover": {
@@ -35,9 +35,6 @@
         "videos",
         "audios"
       ]
-    },
-    "length": {
-      "type": "integer"
     },
     "author": {
       "type": "relation",
@@ -56,6 +53,17 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::tag.tag"
+    },
+    "category": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::category.category",
+      "inversedBy": "library_contents"
+    },
+    "duration": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.duration"
     }
   }
 }

@@ -812,11 +812,6 @@ export interface ApiArticleArticle extends Schema.CollectionType {
       'manyToOne',
       'api::author.author'
     >;
-    category: Attribute.Relation<
-      'api::article.article',
-      'manyToOne',
-      'api::category.category'
-    >;
     blocks: Attribute.DynamicZone<
       ['shared.media', 'shared.quote', 'shared.rich-text', 'shared.slider']
     >;
@@ -892,10 +887,10 @@ export interface ApiCategoryCategory extends Schema.CollectionType {
   attributes: {
     name: Attribute.String;
     slug: Attribute.UID;
-    articles: Attribute.Relation<
+    library_contents: Attribute.Relation<
       'api::category.category',
       'oneToMany',
-      'api::article.article'
+      'api::library-content.library-content'
     >;
     description: Attribute.Text;
     order: Attribute.Integer;
@@ -930,10 +925,9 @@ export interface ApiLibraryContentLibraryContent extends Schema.CollectionType {
   attributes: {
     title: Attribute.String;
     slug: Attribute.UID<'api::library-content.library-content', 'title'>;
-    short_description: Attribute.String;
-    description: Attribute.Text;
+    description_short: Attribute.String;
+    description_long: Attribute.Text;
     cover: Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
-    length: Attribute.Integer;
     author: Attribute.Relation<
       'api::library-content.library-content',
       'oneToOne',
@@ -947,6 +941,12 @@ export interface ApiLibraryContentLibraryContent extends Schema.CollectionType {
       'oneToMany',
       'api::tag.tag'
     >;
+    category: Attribute.Relation<
+      'api::library-content.library-content',
+      'manyToOne',
+      'api::category.category'
+    >;
+    duration: Attribute.Component<'shared.duration'>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -977,10 +977,11 @@ export interface ApiTagTag extends Schema.CollectionType {
     draftAndPublish: true;
   };
   attributes: {
-    primary_hex: Attribute.String;
+    primary_colour: Attribute.String;
     name: Attribute.String & Attribute.Required & Attribute.Unique;
     description: Attribute.String;
-    secondary_hex: Attribute.String;
+    secondary_colour: Attribute.String;
+    label_colour: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

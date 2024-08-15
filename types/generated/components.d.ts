@@ -73,6 +73,18 @@ export interface SharedMedia extends Schema.Component {
   };
 }
 
+export interface SharedDuration extends Schema.Component {
+  collectionName: 'components_shared_durations';
+  info: {
+    displayName: 'Duration';
+    icon: 'clock';
+  };
+  attributes: {
+    duration: Attribute.String;
+    icon_url: Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+  };
+}
+
 export interface SharedContentTile extends Schema.Component {
   collectionName: 'components_shared_content_tiles';
   info: {
@@ -123,6 +135,7 @@ declare module '@strapi/types' {
       'shared.rich-text': SharedRichText;
       'shared.quote': SharedQuote;
       'shared.media': SharedMedia;
+      'shared.duration': SharedDuration;
       'shared.content-tile': SharedContentTile;
       'shared.actions': SharedActions;
     }

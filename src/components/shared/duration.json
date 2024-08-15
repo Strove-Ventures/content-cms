@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_shared_durations",
+  "info": {
+    "displayName": "Duration",
+    "icon": "clock"
+  },
+  "options": {},
+  "attributes": {
+    "duration": {
+      "type": "string"
+    },
+    "icon_url": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
+    }
+  }
+}
