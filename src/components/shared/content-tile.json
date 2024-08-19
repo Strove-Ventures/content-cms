@@ -6,7 +6,7 @@
   },
   "options": {},
   "attributes": {
-    "cont": {
+    "contents": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::library-content.library-content"

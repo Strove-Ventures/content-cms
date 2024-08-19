@@ -12,10 +12,10 @@
     "title": {
       "type": "string"
     },
-    "tiles": {
-      "type": "component",
-      "repeatable": true,
-      "component": "shared.content-tile"
+    "library_contents": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::library-content.library-content"
     }
   }
 }

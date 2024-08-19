@@ -82,7 +82,11 @@ export interface SharedLibrarySection extends Schema.Component {
   attributes: {
     order: Attribute.Integer;
     title: Attribute.String;
-    tiles: Attribute.Component<'shared.content-tile', true>;
+    library_contents: Attribute.Relation<
+      'shared.library-section',
+      'oneToMany',
+      'api::library-content.library-content'
+    >;
   };
 }
 
@@ -106,7 +110,7 @@ export interface SharedContentTile extends Schema.Component {
     description: '';
   };
   attributes: {
-    cont: Attribute.Relation<
+    contents: Attribute.Relation<
       'shared.content-tile',
       'oneToMany',
       'api::library-content.library-content'
