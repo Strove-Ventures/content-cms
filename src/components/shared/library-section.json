@@ -6,16 +6,16 @@
   },
   "options": {},
   "attributes": {
-    "tiles": {
-      "type": "component",
-      "repeatable": true,
-      "component": "shared.content-tile"
-    },
     "order": {
       "type": "integer"
     },
     "title": {
       "type": "string"
+    },
+    "tiles": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.content-tile"
     }
   }
 }
