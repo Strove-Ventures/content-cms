@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2024-08-19T20:41:10.074Z"
+    "x-generation-date": "2024-08-27T13:58:24.952Z"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -5836,6 +5836,15 @@
                           "pattern": "^\\d*$",
                           "example": "123456789"
                         },
+                        "type": {
+                          "type": "string",
+                          "enum": [
+                            "large-tile",
+                            "standard-tile",
+                            "narrow-tile",
+                            "long-tile"
+                          ]
+                        },
                         "createdAt": {
                           "type": "string",
                           "format": "date-time"
@@ -6060,6 +6069,15 @@
                 "type": "string",
                 "pattern": "^\\d*$",
                 "example": "123456789"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "large-tile",
+                  "standard-tile",
+                  "narrow-tile",
+                  "long-tile"
+                ]
               }
             }
           }
@@ -8377,6 +8395,15 @@
                                       "pattern": "^\\d*$",
                                       "example": "123456789"
                                     },
+                                    "type": {
+                                      "type": "string",
+                                      "enum": [
+                                        "large-tile",
+                                        "standard-tile",
+                                        "narrow-tile",
+                                        "long-tile"
+                                      ]
+                                    },
                                     "createdAt": {
                                       "type": "string",
                                       "format": "date-time"
@@ -8491,6 +8518,15 @@
             "type": "string",
             "pattern": "^\\d*$",
             "example": "123456789"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "large-tile",
+              "standard-tile",
+              "narrow-tile",
+              "long-tile"
+            ]
           },
           "createdAt": {
             "type": "string",
@@ -11098,6 +11134,15 @@
                           "pattern": "^\\d*$",
                           "example": "123456789"
                         },
+                        "type": {
+                          "type": "string",
+                          "enum": [
+                            "large-tile",
+                            "standard-tile",
+                            "narrow-tile",
+                            "long-tile"
+                          ]
+                        },
                         "createdAt": {
                           "type": "string",
                           "format": "date-time"
@@ -11150,6 +11195,15 @@
                 }
               }
             }
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "large-tile-list",
+              "standard-tile-list",
+              "narrow-tile-list",
+              "long-tile-list"
+            ]
           }
         }
       },

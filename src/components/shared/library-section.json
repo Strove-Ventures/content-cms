@@ -16,6 +16,15 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::library-content.library-content"
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "large-tile-list",
+        "standard-tile-list",
+        "narrow-tile-list",
+        "long-tile-list"
+      ]
     }
   }
 }

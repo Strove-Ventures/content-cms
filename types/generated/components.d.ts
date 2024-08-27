@@ -62,6 +62,17 @@ export interface SharedQuote extends Schema.Component {
   };
 }
 
+export interface SharedPoints extends Schema.Component {
+  collectionName: 'components_shared_points';
+  info: {
+    displayName: 'points';
+  };
+  attributes: {
+    value: Attribute.Integer;
+    earnable: Attribute.Boolean;
+  };
+}
+
 export interface SharedMedia extends Schema.Component {
   collectionName: 'components_shared_media';
   info: {
@@ -86,6 +97,14 @@ export interface SharedLibrarySection extends Schema.Component {
       'shared.library-section',
       'oneToMany',
       'api::library-content.library-content'
+    >;
+    type: Attribute.Enumeration<
+      [
+        'large-tile-list',
+        'standard-tile-list',
+        'narrow-tile-list',
+        'long-tile-list'
+      ]
     >;
   };
 }
@@ -139,6 +158,7 @@ declare module '@strapi/types' {
       'shared.seo': SharedSeo;
       'shared.rich-text': SharedRichText;
       'shared.quote': SharedQuote;
+      'shared.points': SharedPoints;
       'shared.media': SharedMedia;
       'shared.library-section': SharedLibrarySection;
       'shared.duration': SharedDuration;

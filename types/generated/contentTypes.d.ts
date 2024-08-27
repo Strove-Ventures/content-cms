@@ -916,7 +916,7 @@ export interface ApiLibraryContentLibraryContent extends Schema.CollectionType {
   info: {
     singularName: 'library-content';
     pluralName: 'library-contents';
-    displayName: 'Library Content';
+    displayName: 'Library content';
     description: '';
   };
   options: {
@@ -959,6 +959,9 @@ export interface ApiLibraryContentLibraryContent extends Schema.CollectionType {
     >;
     duration: Attribute.Component<'shared.duration'>;
     view_count: Attribute.BigInteger;
+    type: Attribute.Enumeration<
+      ['large-tile', 'standard-tile', 'narrow-tile', 'long-tile']
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

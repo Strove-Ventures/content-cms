@@ -4,7 +4,7 @@
   "info": {
     "singularName": "library-content",
     "pluralName": "library-contents",
-    "displayName": "Library Content",
+    "displayName": "Library content",
     "description": ""
   },
   "options": {
@@ -75,6 +75,15 @@
     },
     "view_count": {
       "type": "biginteger"
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "large-tile",
+        "standard-tile",
+        "narrow-tile",
+        "long-tile"
+      ]
     }
   }
 }
