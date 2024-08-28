@@ -84,6 +84,11 @@
         "narrow-tile",
         "long-tile"
       ]
+    },
+    "seo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.seo"
     }
   }
 }

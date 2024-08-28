@@ -117,8 +117,9 @@ export interface SharedDuration extends Schema.Component {
     description: '';
   };
   attributes: {
-    duration: Attribute.String;
+    label: Attribute.String;
     icon: Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    value: Attribute.Integer;
   };
 }
 

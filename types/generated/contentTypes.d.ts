@@ -962,6 +962,7 @@ export interface ApiLibraryContentLibraryContent extends Schema.CollectionType {
     type: Attribute.Enumeration<
       ['large-tile', 'standard-tile', 'narrow-tile', 'long-tile']
     >;
+    seo: Attribute.Component<'shared.seo'>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
