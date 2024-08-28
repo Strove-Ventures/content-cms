@@ -12,22 +12,23 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "primary_colour": {
-      "type": "string"
-    },
     "name": {
       "type": "string",
       "required": true,
       "unique": true
     },
-    "description": {
-      "type": "string"
+    "meta": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.seo"
     },
-    "secondary_colour": {
-      "type": "string"
-    },
-    "label_colour": {
-      "type": "string"
+    "accent": {
+      "type": "enumeration",
+      "enum": [
+        "accent-1",
+        "accent-2",
+        "accent-3"
+      ]
     }
   }
 }

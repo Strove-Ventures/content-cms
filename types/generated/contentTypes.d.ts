@@ -1040,11 +1040,9 @@ export interface ApiTagTag extends Schema.CollectionType {
     draftAndPublish: true;
   };
   attributes: {
-    primary_colour: Attribute.String;
     name: Attribute.String & Attribute.Required & Attribute.Unique;
-    description: Attribute.String;
-    secondary_colour: Attribute.String;
-    label_colour: Attribute.String;
+    meta: Attribute.Component<'shared.seo'>;
+    accent: Attribute.Enumeration<['accent-1', 'accent-2', 'accent-3']>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
