@@ -38,6 +38,14 @@ export interface SharedSeo extends Schema.Component {
   };
 }
 
+export interface SharedRicherText extends Schema.Component {
+  collectionName: 'components_shared_richer_texts';
+  info: {
+    displayName: 'Richer Text';
+  };
+  attributes: {};
+}
+
 export interface SharedRichText extends Schema.Component {
   collectionName: 'components_shared_rich_texts';
   info: {
@@ -66,10 +74,14 @@ export interface SharedPoints extends Schema.Component {
   collectionName: 'components_shared_points';
   info: {
     displayName: 'points';
+    description: '';
   };
   attributes: {
-    value: Attribute.Integer;
-    earnable: Attribute.Boolean;
+    value: Attribute.Integer & Attribute.Required & Attribute.DefaultTo<1>;
+    earnable: Attribute.Boolean & Attribute.DefaultTo<true>;
+    imageUrl: Attribute.String &
+      Attribute.Required &
+      Attribute.DefaultTo<'https://lively-crystal-f13b3a6e8c.media.strapiapp.com/Asset_339_4x_1_48fc1f359f.png'>;
   };
 }
 
@@ -157,6 +169,7 @@ declare module '@strapi/types' {
       'shared.tile-collection': SharedTileCollection;
       'shared.slider': SharedSlider;
       'shared.seo': SharedSeo;
+      'shared.richer-text': SharedRicherText;
       'shared.rich-text': SharedRichText;
       'shared.quote': SharedQuote;
       'shared.points': SharedPoints;

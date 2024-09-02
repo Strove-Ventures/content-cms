@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2024-09-02T15:28:02.729Z"
+    "x-generation-date": "2024-09-02T18:51:25.578Z"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -146,6 +146,9 @@
                 }
               },
               "short_description": {
+                "type": "string"
+              },
+              "RichText": {
                 "type": "string"
               }
             }
@@ -1509,6 +1512,9 @@
                                     "short_description": {
                                       "type": "string"
                                     },
+                                    "RichText": {
+                                      "type": "string"
+                                    },
                                     "createdAt": {
                                       "type": "string",
                                       "format": "date-time"
@@ -1639,6 +1645,9 @@
             }
           },
           "short_description": {
+            "type": "string"
+          },
+          "RichText": {
             "type": "string"
           },
           "createdAt": {
@@ -3506,6 +3515,9 @@
                         "short_description": {
                           "type": "string"
                         },
+                        "RichText": {
+                          "type": "string"
+                        },
                         "createdAt": {
                           "type": "string",
                           "format": "date-time"
@@ -5067,6 +5079,9 @@
                                                   "short_description": {
                                                     "type": "string"
                                                   },
+                                                  "RichText": {
+                                                    "type": "string"
+                                                  },
                                                   "createdAt": {
                                                     "type": "string",
                                                     "format": "date-time"
@@ -5181,20 +5196,6 @@
                           "type": "array",
                           "items": {
                             "anyOf": [
-                              {
-                                "type": "object",
-                                "properties": {
-                                  "id": {
-                                    "type": "number"
-                                  },
-                                  "__component": {
-                                    "type": "string"
-                                  },
-                                  "body": {
-                                    "type": "string"
-                                  }
-                                }
-                              },
                               {
                                 "type": "object",
                                 "properties": {
@@ -5515,6 +5516,20 @@
                                         }
                                       }
                                     }
+                                  }
+                                }
+                              },
+                              {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "type": "number"
+                                  },
+                                  "__component": {
+                                    "type": "string"
+                                  },
+                                  "body": {
+                                    "type": "string"
                                   }
                                 }
                               }
@@ -6109,7 +6124,7 @@
                           "pattern": "^\\d*$",
                           "example": "123456789"
                         },
-                        "type": {
+                        "tiletType": {
                           "type": "string",
                           "enum": [
                             "large-tile",
@@ -6291,6 +6306,34 @@
                             }
                           }
                         },
+                        "richText": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string",
+                          "enum": [
+                            "article",
+                            "audio",
+                            "video"
+                          ]
+                        },
+                        "points": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "number"
+                            },
+                            "value": {
+                              "type": "integer"
+                            },
+                            "earnable": {
+                              "type": "boolean"
+                            },
+                            "imageUrl": {
+                              "type": "string"
+                            }
+                          }
+                        },
                         "createdAt": {
                           "type": "string",
                           "format": "date-time"
@@ -6446,7 +6489,8 @@
             "required": [
               "title",
               "slug",
-              "cover"
+              "cover",
+              "tiletType"
             ],
             "type": "object",
             "properties": {
@@ -6489,9 +6533,6 @@
                 "items": {
                   "anyOf": [
                     {
-                      "$ref": "#/components/schemas/SharedRichTextComponent"
-                    },
-                    {
                       "$ref": "#/components/schemas/SharedMediaComponent"
                     },
                     {
@@ -6499,6 +6540,9 @@
                     },
                     {
                       "$ref": "#/components/schemas/SharedSliderComponent"
+                    },
+                    {
+                      "$ref": "#/components/schemas/SharedRichTextComponent"
                     }
                   ]
                 }
@@ -6536,7 +6580,7 @@
                 "pattern": "^\\d*$",
                 "example": "123456789"
               },
-              "type": {
+              "tiletType": {
                 "type": "string",
                 "enum": [
                   "large-tile",
@@ -6561,6 +6605,20 @@
                   ],
                   "example": "string or id"
                 }
+              },
+              "richText": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "article",
+                  "audio",
+                  "video"
+                ]
+              },
+              "points": {
+                "$ref": "#/components/schemas/SharedPointsComponent"
               }
             }
           }
@@ -6617,7 +6675,8 @@
         "required": [
           "title",
           "slug",
-          "cover"
+          "cover",
+          "tiletType"
         ],
         "properties": {
           "title": {
@@ -7931,6 +7990,9 @@
                                     "short_description": {
                                       "type": "string"
                                     },
+                                    "RichText": {
+                                      "type": "string"
+                                    },
                                     "createdAt": {
                                       "type": "string",
                                       "format": "date-time"
@@ -8046,9 +8108,6 @@
             "items": {
               "anyOf": [
                 {
-                  "$ref": "#/components/schemas/SharedRichTextComponent"
-                },
-                {
                   "$ref": "#/components/schemas/SharedMediaComponent"
                 },
                 {
@@ -8056,6 +8115,9 @@
                 },
                 {
                   "$ref": "#/components/schemas/SharedSliderComponent"
+                },
+                {
+                  "$ref": "#/components/schemas/SharedRichTextComponent"
                 }
               ]
             }
@@ -8504,20 +8566,6 @@
                                               "__component": {
                                                 "type": "string"
                                               },
-                                              "body": {
-                                                "type": "string"
-                                              }
-                                            }
-                                          },
-                                          {
-                                            "type": "object",
-                                            "properties": {
-                                              "id": {
-                                                "type": "number"
-                                              },
-                                              "__component": {
-                                                "type": "string"
-                                              },
                                               "file": {
                                                 "type": "object",
                                                 "properties": {
@@ -8831,6 +8879,20 @@
                                                 }
                                               }
                                             }
+                                          },
+                                          {
+                                            "type": "object",
+                                            "properties": {
+                                              "id": {
+                                                "type": "number"
+                                              },
+                                              "__component": {
+                                                "type": "string"
+                                              },
+                                              "body": {
+                                                "type": "string"
+                                              }
+                                            }
                                           }
                                         ]
                                       }
@@ -9030,7 +9092,7 @@
                                       "pattern": "^\\d*$",
                                       "example": "123456789"
                                     },
-                                    "type": {
+                                    "tiletType": {
                                       "type": "string",
                                       "enum": [
                                         "large-tile",
@@ -9299,6 +9361,34 @@
                                         }
                                       }
                                     },
+                                    "richText": {
+                                      "type": "string"
+                                    },
+                                    "type": {
+                                      "type": "string",
+                                      "enum": [
+                                        "article",
+                                        "audio",
+                                        "video"
+                                      ]
+                                    },
+                                    "points": {
+                                      "type": "object",
+                                      "properties": {
+                                        "id": {
+                                          "type": "number"
+                                        },
+                                        "value": {
+                                          "type": "integer"
+                                        },
+                                        "earnable": {
+                                          "type": "boolean"
+                                        },
+                                        "imageUrl": {
+                                          "type": "string"
+                                        }
+                                      }
+                                    },
                                     "createdAt": {
                                       "type": "string",
                                       "format": "date-time"
@@ -9434,7 +9524,7 @@
             "pattern": "^\\d*$",
             "example": "123456789"
           },
-          "type": {
+          "tiletType": {
             "type": "string",
             "enum": [
               "large-tile",
@@ -9465,6 +9555,20 @@
                 }
               }
             }
+          },
+          "richText": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "article",
+              "audio",
+              "video"
+            ]
+          },
+          "points": {
+            "$ref": "#/components/schemas/SharedPointsComponent"
           },
           "createdAt": {
             "type": "string",
@@ -10342,6 +10446,23 @@
                 }
               }
             }
+          }
+        }
+      },
+      "SharedPointsComponent": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "value": {
+            "type": "integer"
+          },
+          "earnable": {
+            "type": "boolean"
+          },
+          "imageUrl": {
+            "type": "string"
           }
         }
       },
@@ -11928,6 +12049,9 @@
                                                   "short_description": {
                                                     "type": "string"
                                                   },
+                                                  "RichText": {
+                                                    "type": "string"
+                                                  },
                                                   "createdAt": {
                                                     "type": "string",
                                                     "format": "date-time"
@@ -12042,20 +12166,6 @@
                           "type": "array",
                           "items": {
                             "anyOf": [
-                              {
-                                "type": "object",
-                                "properties": {
-                                  "id": {
-                                    "type": "number"
-                                  },
-                                  "__component": {
-                                    "type": "string"
-                                  },
-                                  "body": {
-                                    "type": "string"
-                                  }
-                                }
-                              },
                               {
                                 "type": "object",
                                 "properties": {
@@ -12376,6 +12486,20 @@
                                         }
                                       }
                                     }
+                                  }
+                                }
+                              },
+                              {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "type": "number"
+                                  },
+                                  "__component": {
+                                    "type": "string"
+                                  },
+                                  "body": {
+                                    "type": "string"
                                   }
                                 }
                               }
@@ -12970,7 +13094,7 @@
                           "pattern": "^\\d*$",
                           "example": "123456789"
                         },
-                        "type": {
+                        "tiletType": {
                           "type": "string",
                           "enum": [
                             "large-tile",
@@ -13149,6 +13273,34 @@
                                   }
                                 }
                               }
+                            }
+                          }
+                        },
+                        "richText": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string",
+                          "enum": [
+                            "article",
+                            "audio",
+                            "video"
+                          ]
+                        },
+                        "points": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "number"
+                            },
+                            "value": {
+                              "type": "integer"
+                            },
+                            "earnable": {
+                              "type": "boolean"
+                            },
+                            "imageUrl": {
+                              "type": "string"
                             }
                           }
                         },
@@ -14655,6 +14807,9 @@
                                                               "short_description": {
                                                                 "type": "string"
                                                               },
+                                                              "RichText": {
+                                                                "type": "string"
+                                                              },
                                                               "createdAt": {
                                                                 "type": "string",
                                                                 "format": "date-time"
@@ -14769,20 +14924,6 @@
                                       "type": "array",
                                       "items": {
                                         "anyOf": [
-                                          {
-                                            "type": "object",
-                                            "properties": {
-                                              "id": {
-                                                "type": "number"
-                                              },
-                                              "__component": {
-                                                "type": "string"
-                                              },
-                                              "body": {
-                                                "type": "string"
-                                              }
-                                            }
-                                          },
                                           {
                                             "type": "object",
                                             "properties": {
@@ -15103,6 +15244,20 @@
                                                     }
                                                   }
                                                 }
+                                              }
+                                            }
+                                          },
+                                          {
+                                            "type": "object",
+                                            "properties": {
+                                              "id": {
+                                                "type": "number"
+                                              },
+                                              "__component": {
+                                                "type": "string"
+                                              },
+                                              "body": {
+                                                "type": "string"
                                               }
                                             }
                                           }
@@ -15515,7 +15670,7 @@
                                       "pattern": "^\\d*$",
                                       "example": "123456789"
                                     },
-                                    "type": {
+                                    "tiletType": {
                                       "type": "string",
                                       "enum": [
                                         "large-tile",
@@ -15781,6 +15936,34 @@
                                               }
                                             }
                                           }
+                                        }
+                                      }
+                                    },
+                                    "richText": {
+                                      "type": "string"
+                                    },
+                                    "type": {
+                                      "type": "string",
+                                      "enum": [
+                                        "article",
+                                        "audio",
+                                        "video"
+                                      ]
+                                    },
+                                    "points": {
+                                      "type": "object",
+                                      "properties": {
+                                        "id": {
+                                          "type": "number"
+                                        },
+                                        "value": {
+                                          "type": "integer"
+                                        },
+                                        "earnable": {
+                                          "type": "boolean"
+                                        },
+                                        "imageUrl": {
+                                          "type": "string"
                                         }
                                       }
                                     },

@@ -816,6 +816,13 @@ export interface ApiArticleArticle extends Schema.CollectionType {
       ['shared.media', 'shared.quote', 'shared.rich-text', 'shared.slider']
     >;
     short_description: Attribute.String;
+    RichText: Attribute.RichText &
+      Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'toolbar';
+        }
+      >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -950,7 +957,7 @@ export interface ApiLibraryContentLibraryContent extends Schema.CollectionType {
       'api::author.author'
     >;
     body: Attribute.DynamicZone<
-      ['shared.rich-text', 'shared.media', 'shared.actions', 'shared.slider']
+      ['shared.media', 'shared.actions', 'shared.slider', 'shared.rich-text']
     >;
     tags: Attribute.Relation<
       'api::library-content.library-content',
@@ -964,15 +971,26 @@ export interface ApiLibraryContentLibraryContent extends Schema.CollectionType {
     >;
     duration: Attribute.Component<'shared.duration'>;
     view_count: Attribute.BigInteger;
-    type: Attribute.Enumeration<
+    tiletType: Attribute.Enumeration<
       ['large-tile', 'standard-tile', 'narrow-tile', 'long-tile']
-    >;
+    > &
+      Attribute.Required &
+      Attribute.DefaultTo<'standard-tile'>;
     seo: Attribute.Component<'shared.seo'>;
     subcategories: Attribute.Relation<
       'api::library-content.library-content',
       'oneToMany',
       'api::subcategory.subcategory'
     >;
+    richText: Attribute.RichText &
+      Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'toolbar';
+        }
+      >;
+    type: Attribute.Enumeration<['article', 'audio', 'video']>;
+    points: Attribute.Component<'shared.points'>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

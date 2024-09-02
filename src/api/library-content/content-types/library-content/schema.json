@@ -51,10 +51,10 @@
     "body": {
       "type": "dynamiczone",
       "components": [
-        "shared.rich-text",
         "shared.media",
         "shared.actions",
-        "shared.slider"
+        "shared.slider",
+        "shared.rich-text"
       ]
     },
     "tags": {
@@ -76,14 +76,16 @@
     "view_count": {
       "type": "biginteger"
     },
-    "type": {
+    "tiletType": {
       "type": "enumeration",
       "enum": [
         "large-tile",
         "standard-tile",
         "narrow-tile",
         "long-tile"
-      ]
+      ],
+      "default": "standard-tile",
+      "required": true
     },
     "seo": {
       "type": "component",
@@ -95,6 +97,26 @@
       "relation": "oneToMany",
       "target": "api::subcategory.subcategory",
       "mappedBy": "library_content"
+    },
+    "richText": {
+      "type": "customField",
+      "options": {
+        "preset": "toolbar"
+      },
+      "customField": "plugin::ckeditor5.CKEditor"
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "article",
+        "audio",
+        "video"
+      ]
+    },
+    "points": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.points"
     }
   }
 }

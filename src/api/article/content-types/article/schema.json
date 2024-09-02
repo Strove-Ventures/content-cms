@@ -50,6 +50,13 @@
     },
     "short_description": {
       "type": "string"
+    },
+    "RichText": {
+      "type": "customField",
+      "options": {
+        "preset": "toolbar"
+      },
+      "customField": "plugin::ckeditor5.CKEditor"
     }
   }
 }
