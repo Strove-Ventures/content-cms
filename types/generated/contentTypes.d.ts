@@ -1068,7 +1068,7 @@ export interface ApiSubcategorySubcategory extends Schema.CollectionType {
   info: {
     singularName: 'subcategory';
     pluralName: 'subcategories';
-    displayName: 'Subcategory';
+    displayName: 'Sub category';
     description: '';
   };
   options: {
