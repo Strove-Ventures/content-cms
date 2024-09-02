@@ -975,7 +975,7 @@ export interface ApiLibraryContentLibraryContent extends Schema.CollectionType {
       'api::category.category'
     >;
     duration: Attribute.Component<'shared.duration'>;
-    view_count: Attribute.BigInteger & Attribute.DefaultTo<'0'>;
+    like_count: Attribute.BigInteger & Attribute.DefaultTo<'0'>;
     tiletType: Attribute.Enumeration<
       ['large-tile', 'standard-tile', 'narrow-tile', 'long-tile']
     > &

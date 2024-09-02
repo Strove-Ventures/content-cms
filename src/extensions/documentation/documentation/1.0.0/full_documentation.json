@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2024-09-02T20:42:04.427Z"
+    "x-generation-date": "2024-09-02T20:57:51.631Z"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -5986,7 +5986,7 @@
                             }
                           }
                         },
-                        "view_count": {
+                        "like_count": {
                           "type": "string",
                           "pattern": "^\\d*$",
                           "example": "123456789"
@@ -6445,7 +6445,7 @@
               "duration": {
                 "$ref": "#/components/schemas/SharedDurationComponent"
               },
-              "view_count": {
+              "like_count": {
                 "type": "string",
                 "pattern": "^\\d*$",
                 "example": "123456789"
@@ -8824,7 +8824,7 @@
                                         }
                                       }
                                     },
-                                    "view_count": {
+                                    "like_count": {
                                       "type": "string",
                                       "pattern": "^\\d*$",
                                       "example": "123456789"
@@ -9259,7 +9259,7 @@
           "duration": {
             "$ref": "#/components/schemas/SharedDurationComponent"
           },
-          "view_count": {
+          "like_count": {
             "type": "string",
             "pattern": "^\\d*$",
             "example": "123456789"
@@ -12560,7 +12560,7 @@
                             }
                           }
                         },
-                        "view_count": {
+                        "like_count": {
                           "type": "string",
                           "pattern": "^\\d*$",
                           "example": "123456789"
@@ -15013,7 +15013,7 @@
                                         }
                                       }
                                     },
-                                    "view_count": {
+                                    "like_count": {
                                       "type": "string",
                                       "pattern": "^\\d*$",
                                       "example": "123456789"

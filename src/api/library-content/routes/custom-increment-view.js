@@ -4,8 +4,8 @@ module.exports = {
   routes: [
     {
       method: 'POST',
-      path: '/library-contents/:id/increment-view',
-      handler: 'library-content.incrementViewCount',
+      path: '/library-contents/:id/increment-like',
+      handler: 'library-content.incrementLikeCount',
       config: {
         auth: false,
       },

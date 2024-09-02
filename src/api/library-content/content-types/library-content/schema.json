@@ -75,7 +75,7 @@
       "repeatable": false,
       "component": "shared.duration"
     },
-    "view_count": {
+    "like_count": {
       "type": "biginteger",
       "default": "0"
     },

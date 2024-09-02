@@ -1,22 +1,23 @@
-// ./src/api/library-content/services/library-content.js
-
 'use strict';
 
 const { createCoreService } = require('@strapi/strapi').factories;
 
 module.exports = createCoreService('api::library-content.library-content', ({ strapi }) => ({
-  async incrementViewCount(id) {
+  async incrementLikeCount(id) {
     const entry = await strapi.entityService.findOne('api::library-content.library-content', id, {
-      fields: ['view_count'],
+      fields: ['like_count'],
     });
 
     if (!entry) {
       throw new Error('Entry not found');
     }
 
+    // Ensure like_count is initialized and not NaN
+    const likeCount = entry.like_count && !isNaN(entry.like_count) ? parseInt(entry.like_count, 10) : 0;
+
     const updatedEntry = await strapi.entityService.update('api::library-content.library-content', id, {
       data: {
-        view_count: parseInt(entry.view_count, 10) + 1,
+        like_count: likeCount + 1,
       },
     });
 
