@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2024-09-02T19:11:01.158Z"
+    "x-generation-date": "2024-09-02T19:23:52.236Z"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -5865,6 +5865,9 @@
                                                       }
                                                     }
                                                   },
+                                                  "order": {
+                                                    "type": "integer"
+                                                  },
                                                   "createdAt": {
                                                     "type": "string",
                                                     "format": "date-time"
@@ -6353,8 +6356,10 @@
             "required": [
               "title",
               "slug",
+              "description_short",
               "cover",
               "tiletType",
+              "seo",
               "type"
             ],
             "type": "object",
@@ -6540,8 +6545,10 @@
         "required": [
           "title",
           "slug",
+          "description_short",
           "cover",
           "tiletType",
+          "seo",
           "type"
         ],
         "properties": {
@@ -9037,6 +9044,9 @@
                                                         }
                                                       }
                                                     }
+                                                  },
+                                                  "order": {
+                                                    "type": "integer"
                                                   },
                                                   "createdAt": {
                                                     "type": "string",
@@ -12429,6 +12439,9 @@
                                                       }
                                                     }
                                                   },
+                                                  "order": {
+                                                    "type": "integer"
+                                                  },
                                                   "createdAt": {
                                                     "type": "string",
                                                     "format": "date-time"
@@ -12833,6 +12846,11 @@
         ],
         "properties": {
           "data": {
+            "required": [
+              "Name",
+              "slug",
+              "order"
+            ],
             "type": "object",
             "properties": {
               "Name": {
@@ -12862,6 +12880,9 @@
                   }
                 ],
                 "example": "string or id"
+              },
+              "order": {
+                "type": "integer"
               }
             }
           }
@@ -12915,6 +12936,11 @@
       },
       "Subcategory": {
         "type": "object",
+        "required": [
+          "Name",
+          "slug",
+          "order"
+        ],
         "properties": {
           "Name": {
             "type": "string"
@@ -15208,6 +15234,9 @@
                                                       }
                                                     }
                                                   },
+                                                  "order": {
+                                                    "type": "integer"
+                                                  },
                                                   "createdAt": {
                                                     "type": "string",
                                                     "format": "date-time"
@@ -15432,6 +15461,9 @@
                 }
               }
             }
+          },
+          "order": {
+            "type": "integer"
           },
           "createdAt": {
             "type": "string",

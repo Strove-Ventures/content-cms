@@ -947,7 +947,12 @@ export interface ApiLibraryContentLibraryContent extends Schema.CollectionType {
         minLength: 2;
         maxLength: 128;
       }>;
-    description_short: Attribute.String;
+    description_short: Attribute.String &
+      Attribute.Required &
+      Attribute.SetMinMaxLength<{
+        minLength: 2;
+        maxLength: 128;
+      }>;
     description_long: Attribute.Text;
     cover: Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
       Attribute.Required;
@@ -970,13 +975,13 @@ export interface ApiLibraryContentLibraryContent extends Schema.CollectionType {
       'api::category.category'
     >;
     duration: Attribute.Component<'shared.duration'>;
-    view_count: Attribute.BigInteger;
+    view_count: Attribute.BigInteger & Attribute.DefaultTo<'0'>;
     tiletType: Attribute.Enumeration<
       ['large-tile', 'standard-tile', 'narrow-tile', 'long-tile']
     > &
       Attribute.Required &
       Attribute.DefaultTo<'standard-tile'>;
-    seo: Attribute.Component<'shared.seo'>;
+    seo: Attribute.Component<'shared.seo'> & Attribute.Required;
     subcategories: Attribute.Relation<
       'api::library-content.library-content',
       'oneToMany',
@@ -1070,8 +1075,9 @@ export interface ApiSubcategorySubcategory extends Schema.CollectionType {
     draftAndPublish: true;
   };
   attributes: {
-    Name: Attribute.String;
-    slug: Attribute.UID<'api::subcategory.subcategory', 'Name'>;
+    Name: Attribute.String & Attribute.Required;
+    slug: Attribute.UID<'api::subcategory.subcategory', 'Name'> &
+      Attribute.Required;
     category: Attribute.Relation<
       'api::subcategory.subcategory',
       'manyToOne',
@@ -1082,6 +1088,7 @@ export interface ApiSubcategorySubcategory extends Schema.CollectionType {
       'manyToOne',
       'api::library-content.library-content'
     >;
+    order: Attribute.Integer & Attribute.Required & Attribute.DefaultTo<0>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

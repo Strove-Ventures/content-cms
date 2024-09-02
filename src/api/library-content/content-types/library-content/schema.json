@@ -27,7 +27,9 @@
     },
     "description_short": {
       "type": "string",
-      "required": false
+      "required": true,
+      "minLength": 2,
+      "maxLength": 128
     },
     "description_long": {
       "type": "text"
@@ -74,7 +76,8 @@
       "component": "shared.duration"
     },
     "view_count": {
-      "type": "biginteger"
+      "type": "biginteger",
+      "default": "0"
     },
     "tiletType": {
       "type": "enumeration",
@@ -90,7 +93,8 @@
     "seo": {
       "type": "component",
       "repeatable": false,
-      "component": "shared.seo"
+      "component": "shared.seo",
+      "required": true
     },
     "subcategories": {
       "type": "relation",
