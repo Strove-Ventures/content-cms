@@ -894,6 +894,11 @@ export interface ApiCategoryCategory extends Schema.CollectionType {
     >;
     description: Attribute.Text;
     order: Attribute.Integer;
+    subcategories: Attribute.Relation<
+      'api::category.category',
+      'oneToMany',
+      'api::subcategory.subcategory'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -963,6 +968,11 @@ export interface ApiLibraryContentLibraryContent extends Schema.CollectionType {
       ['large-tile', 'standard-tile', 'narrow-tile', 'long-tile']
     >;
     seo: Attribute.Component<'shared.seo'>;
+    subcategories: Attribute.Relation<
+      'api::library-content.library-content',
+      'oneToMany',
+      'api::subcategory.subcategory'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1028,6 +1038,48 @@ export interface ApiMobileLibraryMobileLibrary extends Schema.SingleType {
   };
 }
 
+export interface ApiSubcategorySubcategory extends Schema.CollectionType {
+  collectionName: 'subcategories';
+  info: {
+    singularName: 'subcategory';
+    pluralName: 'subcategories';
+    displayName: 'Subcategory';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Name: Attribute.String;
+    slug: Attribute.UID<'api::subcategory.subcategory', 'Name'>;
+    category: Attribute.Relation<
+      'api::subcategory.subcategory',
+      'manyToOne',
+      'api::category.category'
+    >;
+    library_content: Attribute.Relation<
+      'api::subcategory.subcategory',
+      'manyToOne',
+      'api::library-content.library-content'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::subcategory.subcategory',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::subcategory.subcategory',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiTagTag extends Schema.CollectionType {
   collectionName: 'tags';
   info: {
@@ -1076,6 +1128,7 @@ declare module '@strapi/types' {
       'api::category.category': ApiCategoryCategory;
       'api::library-content.library-content': ApiLibraryContentLibraryContent;
       'api::mobile-library.mobile-library': ApiMobileLibraryMobileLibrary;
+      'api::subcategory.subcategory': ApiSubcategorySubcategory;
       'api::tag.tag': ApiTagTag;
     }
   }
