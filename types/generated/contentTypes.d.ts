@@ -1075,7 +1075,7 @@ export interface ApiSubcategorySubcategory extends Schema.CollectionType {
     draftAndPublish: true;
   };
   attributes: {
-    Name: Attribute.String & Attribute.Required;
+    Name: Attribute.String & Attribute.Required & Attribute.DefaultTo<'All'>;
     slug: Attribute.UID<'api::subcategory.subcategory', 'Name'> &
       Attribute.Required;
     category: Attribute.Relation<

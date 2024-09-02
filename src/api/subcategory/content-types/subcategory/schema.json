@@ -14,7 +14,8 @@
   "attributes": {
     "Name": {
       "type": "string",
-      "required": true
+      "required": true,
+      "default": "All"
     },
     "slug": {
       "type": "uid",
