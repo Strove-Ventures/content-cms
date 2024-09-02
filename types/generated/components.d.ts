@@ -129,9 +129,11 @@ export interface SharedDuration extends Schema.Component {
     description: '';
   };
   attributes: {
-    label: Attribute.String;
-    icon: Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
-    value: Attribute.Integer;
+    label: Attribute.String & Attribute.DefaultTo<'min'>;
+    value: Attribute.Integer & Attribute.Required;
+    imageUrl: Attribute.String &
+      Attribute.Required &
+      Attribute.DefaultTo<'https://lively-crystal-f13b3a6e8c.media.strapiapp.com/clock_cabec89325.png'>;
   };
 }
 

@@ -8,21 +8,17 @@
   "options": {},
   "attributes": {
     "label": {
-      "type": "string"
-    },
-    "icon": {
-      "type": "media",
-      "multiple": false,
-      "required": false,
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ]
+      "type": "string",
+      "default": "min"
     },
     "value": {
-      "type": "integer"
+      "type": "integer",
+      "required": true
+    },
+    "imageUrl": {
+      "type": "string",
+      "default": "https://lively-crystal-f13b3a6e8c.media.strapiapp.com/clock_cabec89325.png",
+      "required": true
     }
   }
 }

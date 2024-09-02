@@ -111,7 +111,9 @@
         "article",
         "audio",
         "video"
-      ]
+      ],
+      "default": "article",
+      "required": true
     },
     "points": {
       "type": "component",

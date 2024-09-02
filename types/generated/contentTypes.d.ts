@@ -989,7 +989,9 @@ export interface ApiLibraryContentLibraryContent extends Schema.CollectionType {
           preset: 'toolbar';
         }
       >;
-    type: Attribute.Enumeration<['article', 'audio', 'video']>;
+    type: Attribute.Enumeration<['article', 'audio', 'video']> &
+      Attribute.Required &
+      Attribute.DefaultTo<'article'>;
     points: Attribute.Component<'shared.points'>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
