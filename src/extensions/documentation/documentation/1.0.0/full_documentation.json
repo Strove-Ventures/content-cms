@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2024-09-02T20:57:51.631Z"
+    "x-generation-date": "2024-09-03T12:03:17.156Z"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -5991,7 +5991,7 @@
                           "pattern": "^\\d*$",
                           "example": "123456789"
                         },
-                        "tiletType": {
+                        "tileType": {
                           "type": "string",
                           "enum": [
                             "large-tile",
@@ -6358,7 +6358,7 @@
               "slug",
               "description_short",
               "cover",
-              "tiletType",
+              "tileType",
               "seo",
               "type"
             ],
@@ -6450,7 +6450,7 @@
                 "pattern": "^\\d*$",
                 "example": "123456789"
               },
-              "tiletType": {
+              "tileType": {
                 "type": "string",
                 "enum": [
                   "large-tile",
@@ -6547,7 +6547,7 @@
           "slug",
           "description_short",
           "cover",
-          "tiletType",
+          "tileType",
           "seo",
           "type"
         ],
@@ -8829,7 +8829,7 @@
                                       "pattern": "^\\d*$",
                                       "example": "123456789"
                                     },
-                                    "tiletType": {
+                                    "tileType": {
                                       "type": "string",
                                       "enum": [
                                         "large-tile",
@@ -9264,7 +9264,7 @@
             "pattern": "^\\d*$",
             "example": "123456789"
           },
-          "tiletType": {
+          "tileType": {
             "type": "string",
             "enum": [
               "large-tile",
@@ -12565,7 +12565,7 @@
                           "pattern": "^\\d*$",
                           "example": "123456789"
                         },
-                        "tiletType": {
+                        "tileType": {
                           "type": "string",
                           "enum": [
                             "large-tile",
@@ -15018,7 +15018,7 @@
                                       "pattern": "^\\d*$",
                                       "example": "123456789"
                                     },
-                                    "tiletType": {
+                                    "tileType": {
                                       "type": "string",
                                       "enum": [
                                         "large-tile",

@@ -976,7 +976,7 @@ export interface ApiLibraryContentLibraryContent extends Schema.CollectionType {
     >;
     duration: Attribute.Component<'shared.duration'>;
     like_count: Attribute.BigInteger & Attribute.DefaultTo<'0'>;
-    tiletType: Attribute.Enumeration<
+    tileType: Attribute.Enumeration<
       ['large-tile', 'standard-tile', 'narrow-tile', 'long-tile']
     > &
       Attribute.Required &

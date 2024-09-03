@@ -12,7 +12,6 @@ module.exports = createCoreService('api::library-content.library-content', ({ st
       throw new Error('Entry not found');
     }
 
-    // Ensure like_count is initialized and not NaN
     const likeCount = entry.like_count && !isNaN(entry.like_count) ? parseInt(entry.like_count, 10) : 0;
 
     const updatedEntry = await strapi.entityService.update('api::library-content.library-content', id, {

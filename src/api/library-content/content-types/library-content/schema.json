@@ -79,7 +79,7 @@
       "type": "biginteger",
       "default": "0"
     },
-    "tiletType": {
+    "tileType": {
       "type": "enumeration",
       "enum": [
         "large-tile",

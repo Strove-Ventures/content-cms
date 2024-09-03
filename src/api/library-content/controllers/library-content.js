@@ -20,4 +20,43 @@ module.exports = createCoreController('api::library-content.library-content', ({
 
     return ctx.send({ data: updatedEntry });
   },
+
+  async search(ctx) {
+    try {
+      const { query } = ctx.request.query;
+
+      if (!query) {
+        return ctx.badRequest('Query parameter is required');
+      }
+
+      // Get all the non-relation fields of the library-content model
+      // const fields = Object.entries(strapi.contentTypes['api::library-content.library-content'].attributes)
+      //   .filter(([key, value]) => value.type !== 'relation')
+      //   .map(([key]) => key);
+      const searchableFields = [
+        'title',
+        'slug',
+        'description_short',
+        'description_long',
+        'tileType',
+        'type',
+        'richText'
+      ];
+
+      // Build the OR condition dynamically for searchable fields
+      const orConditions = searchableFields.map(field => ({
+        [field]: { $containsi: query }
+      }));
+
+      // Perform the search
+      const entries = await strapi.db.query('api::library-content.library-content').findMany({
+        where: { $or: orConditions }
+      });
+
+      return ctx.send({ data: entries });
+    } catch (error) {
+      strapi.log.error('Search error:', error);
+      return ctx.internalServerError('Something went wrong during the search');
+    }
+  },
 }));
