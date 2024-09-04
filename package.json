@@ -4,28 +4,29 @@
     "@strapi/plugin-cloud": "4.21.1",
     "@strapi/plugin-documentation": "^4.25.8",
     "@strapi/plugin-graphql": "^4.0.5",
-    "@strapi/plugin-i18n": "4.7.0",
+    "@strapi/plugin-i18n": "^4.16.2",
     "@strapi/plugin-sentry": "^4.25.9",
     "@strapi/plugin-seo": "^1.9.9",
-    "@strapi/plugin-users-permissions": "4.7.0",
+    "@strapi/plugin-users-permissions": "^4.25.8",
     "@strapi/provider-email-sendgrid": "^4.25.8",
     "@strapi/provider-upload-aws-s3": "^4.25.8",
-    "@strapi/strapi": "4.7.0",
-    "better-sqlite3": "7.4.6",
-    "cron-parser": "^4.9.0",
+    "@strapi/strapi": "^4.25.8",
+    "better-sqlite3": "8.6.0",
     "fs-extra": "^10.0.0",
     "lodash.set": "^4.3.2",
     "mime-types": "^2.1.27",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-router-dom": "5.3.4",
+    "strapi": "^3.6.11",
     "strapi-plugin-component-preview": "^1.1.0",
     "strapi-plugin-import-export-entries": "^1.23.1",
     "strapi-plugin-responsive-image": "^1.2.0",
     "strapi-plugin-rest-cache": "^4.2.9",
+    "strapi-prometheus": "^1.9.1",
     "styled-components": "5.3.3"
   },
-  "name": "content-cms",
+  "name": "my-app-name",
   "private": true,
   "version": "0.1.0",
   "description": "A Strapi application",
@@ -33,8 +34,7 @@
     "develop": "strapi develop",
     "start": "strapi start",
     "build": "strapi build",
-    "strapi": "strapi",
-    "test": "jest --forceExit --detectOpenHandles"
+    "strapi": "strapi"
   },
   "author": {
     "name": "A Strapi developer"
@@ -45,5 +45,6 @@
   "engines": {
     "node": ">=18.0.0 <=20.x.x",
     "npm": ">=6.0.0"
-  }
+  },
+  "license": "MIT"
 }
