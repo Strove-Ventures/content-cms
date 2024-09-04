@@ -33,25 +33,33 @@ module.exports = createCoreController('api::library-content.library-content', ({
       // const fields = Object.entries(strapi.contentTypes['api::library-content.library-content'].attributes)
       //   .filter(([key, value]) => value.type !== 'relation')
       //   .map(([key]) => key);
-      const searchableFields = [
-        'title',
-        'slug',
-        'description_short',
-        'description_long',
-        'tileType',
-        'type',
-        'richText'
-      ];
+      const searchableFields = ['title', 'slug', 'description_short', 'description_long', 'tileType', 'type', 'richText'];
 
-      // Build the OR condition dynamically for searchable fields
       const orConditions = searchableFields.map(field => ({
         [field]: { $containsi: query }
       }));
 
-      // Perform the search
+      // Perform the search and populate specific fields
       const entries = await strapi.db.query('api::library-content.library-content').findMany({
-        where: { $or: orConditions }
+        where: { $or: orConditions },
+        populate: ['cover', 'duration', 'points'],
       });
+
+      // Format the results to include necessary details
+      const formattedEntries = entries.map(entry => ({
+        id: entry.id,
+        title: entry.title,
+        slug: entry.slug,
+        description_short: entry.description_short,
+        description_long: entry.description_long,
+        type: entry.type,
+        like_count: entry.like_count,
+        tileType: entry.tileType,
+        cover_url: entry.cover?.url || null,
+        duration: entry.duration || null,
+        points: entry.points || null,
+      }));
+
 
       return ctx.send({ data: entries });
     } catch (error) {
