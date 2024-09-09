@@ -1016,12 +1016,44 @@ export interface ApiLibraryContentLibraryContent extends Schema.CollectionType {
   };
 }
 
+export interface ApiMobileContentFilterMobileContentFilter
+  extends Schema.SingleType {
+  collectionName: 'mobile_content_filters';
+  info: {
+    singularName: 'mobile-content-filter';
+    pluralName: 'mobile-content-filters';
+    displayName: 'Mobile filters';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    filters: Attribute.Component<'shared.filter-tags', true>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::mobile-content-filter.mobile-content-filter',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::mobile-content-filter.mobile-content-filter',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiMobileLibraryMobileLibrary extends Schema.SingleType {
   collectionName: 'mobile_libraries';
   info: {
     singularName: 'mobile-library';
     pluralName: 'mobile-libraries';
-    displayName: 'Mobile Library';
+    displayName: 'Mobile library';
     description: '';
   };
   options: {
@@ -1154,6 +1186,7 @@ declare module '@strapi/types' {
       'api::author.author': ApiAuthorAuthor;
       'api::category.category': ApiCategoryCategory;
       'api::library-content.library-content': ApiLibraryContentLibraryContent;
+      'api::mobile-content-filter.mobile-content-filter': ApiMobileContentFilterMobileContentFilter;
       'api::mobile-library.mobile-library': ApiMobileLibraryMobileLibrary;
       'api::subcategory.subcategory': ApiSubcategorySubcategory;
       'api::tag.tag': ApiTagTag;

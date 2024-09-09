@@ -1,0 +1,21 @@
+{
+  "kind": "singleType",
+  "collectionName": "mobile_content_filters",
+  "info": {
+    "singularName": "mobile-content-filter",
+    "pluralName": "mobile-content-filters",
+    "displayName": "Mobile filters",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "filters": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.filter-tags"
+    }
+  }
+}

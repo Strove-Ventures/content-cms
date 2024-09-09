@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_shared_filter_tags",
+  "info": {
+    "displayName": "Filter tags",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "tags": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::tag.tag"
+    },
+    "title": {
+      "type": "string",
+      "unique": false,
+      "required": true
+    },
+    "order": {
+      "type": "integer",
+      "default": 1,
+      "required": true
+    }
+  }
+}

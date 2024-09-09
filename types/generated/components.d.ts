@@ -121,6 +121,19 @@ export interface SharedLibrarySection extends Schema.Component {
   };
 }
 
+export interface SharedFilterTags extends Schema.Component {
+  collectionName: 'components_shared_filter_tags';
+  info: {
+    displayName: 'Filter tags';
+    description: '';
+  };
+  attributes: {
+    tags: Attribute.Relation<'shared.filter-tags', 'oneToMany', 'api::tag.tag'>;
+    title: Attribute.String & Attribute.Required;
+    order: Attribute.Integer & Attribute.Required & Attribute.DefaultTo<1>;
+  };
+}
+
 export interface SharedDuration extends Schema.Component {
   collectionName: 'components_shared_durations';
   info: {
@@ -177,6 +190,7 @@ declare module '@strapi/types' {
       'shared.points': SharedPoints;
       'shared.media': SharedMedia;
       'shared.library-section': SharedLibrarySection;
+      'shared.filter-tags': SharedFilterTags;
       'shared.duration': SharedDuration;
       'shared.content-tile': SharedContentTile;
       'shared.actions': SharedActions;
