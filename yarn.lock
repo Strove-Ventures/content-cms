@@ -12255,11 +12255,6 @@ statuses@2.0.1, statuses@^2.0.1:
   resolved "https://registry.yarnpkg.com/statuses/-/statuses-1.5.0.tgz#161c7dac177659fd9811f43771fa99381478628c"
   integrity sha512-OpZ3zP+jT1PI7I8nemJX4AKmAX070ZkYPVWV/AaKTJl+tXCTGyVdC1a4SL8RUQYEwk/f34ZX8UTykN68FwrqAA==
 
-strapi-plugin-component-preview@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/strapi-plugin-component-preview/-/strapi-plugin-component-preview-1.1.0.tgz#b207d39430ad2f6a16d314f0f233f6cdb479bb23"
-  integrity sha512-Sl9uU9yyHdQz6GkuwV5Uu9zXWrYz5mbqePsEV1GCupdSRQZ7WbJTyVpgCMq99uL0d6Lb83gAV5cU9ZlrG3HvaA==
-
 strapi-plugin-import-export-entries@^1.23.1:
   version "1.23.1"
   resolved "https://registry.yarnpkg.com/strapi-plugin-import-export-entries/-/strapi-plugin-import-export-entries-1.23.1.tgz#bbc1403384e1918c5f66afba84552ece6519416d"

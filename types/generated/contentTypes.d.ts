@@ -966,7 +966,7 @@ export interface ApiLibraryContentLibraryContent extends Schema.CollectionType {
     >;
     tags: Attribute.Relation<
       'api::library-content.library-content',
-      'oneToMany',
+      'manyToMany',
       'api::tag.tag'
     >;
     category: Attribute.Relation<
@@ -1154,6 +1154,11 @@ export interface ApiTagTag extends Schema.CollectionType {
     name: Attribute.String & Attribute.Required & Attribute.Unique;
     meta: Attribute.Component<'shared.seo'>;
     accent: Attribute.Enumeration<['accent-1', 'accent-2', 'accent-3']>;
+    library_contents: Attribute.Relation<
+      'api::tag.tag',
+      'manyToMany',
+      'api::library-content.library-content'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

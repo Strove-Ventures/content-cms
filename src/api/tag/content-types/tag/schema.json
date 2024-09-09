@@ -29,6 +29,12 @@
         "accent-2",
         "accent-3"
       ]
+    },
+    "library_contents": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::library-content.library-content",
+      "inversedBy": "tags"
     }
   }
 }

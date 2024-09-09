@@ -29,21 +29,50 @@ module.exports = createCoreController('api::library-content.library-content', ({
         return ctx.badRequest('Query parameter is required');
       }
 
-      // Get all the non-relation fields of the library-content model
-      // const fields = Object.entries(strapi.contentTypes['api::library-content.library-content'].attributes)
-      //   .filter(([key, value]) => value.type !== 'relation')
-      //   .map(([key]) => key);
+      // Define the searchable fields for the main entity
       const searchableFields = ['title', 'slug', 'description_short', 'description_long', 'tileType', 'type', 'richText'];
 
+      // Create OR conditions for the searchable fields
       const orConditions = searchableFields.map(field => ({
         [field]: { $containsi: query }
       }));
 
-      // Perform the search and populate specific fields
+      // Perform the search and add filtering for the tags relation
       const entries = await strapi.db.query('api::library-content.library-content').findMany({
-        where: { $or: orConditions },
-        populate: ['cover', 'duration', 'points'],
+        where: {
+          $or: orConditions,  // Search across the library-content fields
+          tags: { name: { $containsi: query } },  // Perform partial match search on tags
+        },
+        populate: ['cover', 'duration', 'points', 'tags'],  // Ensure tags and other relations are populated
       });
+
+      // If entries were not found via direct relation filtering, perform a manual search in tags
+      if (entries.length === 0) {
+        const tagEntries = await strapi.db.query('api::tag.tag').findMany({
+          where: { name: { $containsi: query } },
+          populate: { library_contents: true },  // Populate related library_contents
+        });
+
+        console.log('Tag entries:', tagEntries);
+
+        // Safeguard: check if there are any related library_contents
+        const relatedLibraryContentIds = tagEntries.flatMap(tag => tag.library_contents ? tag.library_contents.map(lc => lc.id) : []);
+
+        console.log('Related library content IDs:', relatedLibraryContentIds);
+
+        // If there are no related contents, return an empty result
+        if (relatedLibraryContentIds.length === 0) {
+          return ctx.send({ data: [] });
+        }
+
+        // Fetch the matching library content entries using their IDs
+        const entriesFromTags = await strapi.db.query('api::library-content.library-content').findMany({
+          where: { id: { $in: relatedLibraryContentIds } },
+          populate: ['cover', 'duration', 'points', 'tags'],  // Populate necessary relations
+        });
+
+        return ctx.send({ data: entriesFromTags });
+      }
 
       // Format the results to include necessary details
       const formattedEntries = entries.map(entry => ({
@@ -58,8 +87,8 @@ module.exports = createCoreController('api::library-content.library-content', ({
         cover_url: entry.cover?.url || null,
         duration: entry.duration || null,
         points: entry.points || null,
+        tags: entry.tags ? entry.tags.map(tag => tag.name) : [],  // Include tag names in the result
       }));
-
 
       return ctx.send({ data: entries });
     } catch (error) {
