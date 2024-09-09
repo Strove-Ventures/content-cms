@@ -18,7 +18,6 @@
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-router-dom": "5.3.4",
-    "strapi": "^3.6.11",
     "strapi-plugin-component-preview": "^1.1.0",
     "strapi-plugin-import-export-entries": "^1.23.1",
     "strapi-plugin-responsive-image": "^1.2.0",
