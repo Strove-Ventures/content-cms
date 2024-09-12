@@ -109,35 +109,18 @@ module.exports = createCoreController('api::library-content.library-content', ({
         [field]: { $containsi: query }
       }));
 
-      // Search across library-content fields first
-      let entries = await strapi.db.query('api::library-content.library-content').findMany({
-        where: { $or: orConditions },
-        populate: ['cover', 'duration', 'points', 'tags']  // Ensure tags and other relations are populated
+      // Perform the search across fields, categories, subcategories, and tags
+      const entries = await strapi.db.query('api::library-content.library-content').findMany({
+        where: {
+          $or: [
+            ...orConditions,  // Search across the library-content fields
+            { category: { name: { $containsi: query } } },  // Search in categories
+            { subCategories: { name: { $containsi: query } } },  // Search in subcategories
+            { tags: { name: { $containsi: query } } }  // Search in tags
+          ]
+        },
+        populate: ['cover', 'duration', 'points', 'tags', 'category', 'subCategories']  // Populate necessary relations
       });
-
-      // If no entries found based on field search, try tag-based search
-      if (entries.length === 0) {
-        const tagEntries = await strapi.db.query('api::tag.tag').findMany({
-          where: { name: { $containsi: query } },
-          populate: { library_contents: true },  // Populate related library_contents
-        });
-
-        // Extract libraryContent IDs from tag search results
-        const relatedLibraryContentIds = tagEntries.flatMap(tag =>
-          tag.libraryContents ? tag.libraryContents.map(lc => lc.id) : []
-        );
-
-        // If no related content from tags, return empty result
-        if (relatedLibraryContentIds.length === 0) {
-          return ctx.send({ data: [] });
-        }
-
-        // Fetch the matching library content entries using the IDs found in tags
-        entries = await strapi.db.query('api::library-content.library-content').findMany({
-          where: { id: { $in: relatedLibraryContentIds } },
-          populate: ['cover', 'duration', 'points', 'tags'],  // Populate necessary relations
-        });
-      }
 
       // Format the results to include necessary details
       const formattedEntries = entries.map(entry => ({
@@ -152,7 +135,9 @@ module.exports = createCoreController('api::library-content.library-content', ({
         coverUrl: entry.cover?.url || null,
         duration: entry.duration || null,
         points: entry.points || null,
-        tags: entry.tags ? entry.tags.map(tag => tag.name) : []  // Include tag names in the result
+        category: entry.category?.name || null,
+        subcategories: entry.subCategories ? entry.subCategories.map(sub => sub.name) : [],  // Include subcategory names
+        tags: entry.tags ? entry.tags.map(tag => tag.name) : [],  // Include tag names
       }));
 
       return ctx.send({ data: formattedEntries });
@@ -161,4 +146,5 @@ module.exports = createCoreController('api::library-content.library-content', ({
       return ctx.internalServerError('Something went wrong during the search');
     }
   },
+
 }));
