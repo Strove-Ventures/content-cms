@@ -136,7 +136,7 @@ module.exports = createCoreController('api::library-content.library-content', ({
         duration: entry.duration || null,
         points: entry.points || null,
         category: entry.category?.name || null,
-        subcategories: entry.subCategories ? entry.subCategories.map(sub => sub.name) : [],  // Include subcategory names
+        subCategories: entry.subCategories ? entry.subCategories.map(sub => sub.name) : [],  // Include subcategory names
         tags: entry.tags ? entry.tags.map(tag => tag.name) : [],  // Include tag names
       }));
 
