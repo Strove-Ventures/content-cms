@@ -21,6 +21,90 @@ module.exports = createCoreController('api::library-content.library-content', ({
     return ctx.send({ data: updatedEntry });
   },
 
+  async find(ctx) {
+    const { category, tags, subcategories } = ctx.query;
+
+    // Initialize filters
+    const filters = {};
+
+    // Log the incoming query parameters
+    strapi.log.info(`Query params - Category: ${category}, Tags: ${tags}, Subcategories: ${subcategories}`);
+
+    /**
+     * Helper function to parse parameters that could be:
+     * - An array
+     * - A comma-separated string
+     * - A single value
+     */
+    const parseFilter = (filterValue) => {
+      if (Array.isArray(filterValue)) {
+        // If it's already an array (e.g., [5,7])
+        return filterValue.map(Number);  // Convert to numbers
+      } else if (typeof filterValue === 'string') {
+        // If it's a comma-separated string or single value (e.g., "5,7" or "5")
+        return filterValue.split(',').map(Number);  // Split by comma and convert to numbers
+      } else if (typeof filterValue === 'number') {
+        // If it's a single number
+        return [filterValue];
+      }
+      return [];
+    };
+
+    // Parse the category filter (assuming category is a single value)
+    if (category) {
+      filters.category = { id: { $eq: Number(category) } };  // Make sure category is treated as a number
+      strapi.log.info(`Category filter applied: ${JSON.stringify(filters.category)}`);
+    }
+
+    // Parse the tags filter using the helper function
+    const tagIds = parseFilter(tags);
+    if (tagIds.length > 0) {
+      filters.tags = { id: { $in: tagIds } };
+      strapi.log.info(`Tags filter applied: ${JSON.stringify(filters.tags)}`);
+    }
+
+    // Parse the subcategories filter using the helper function
+    const subcategoryIds = parseFilter(subcategories);
+    if (subcategoryIds.length > 0) {
+      filters.subcategories = { id: { $in: subcategoryIds } };
+      strapi.log.info(`Subcategories filter applied: ${JSON.stringify(filters.subcategories)}`);
+    }
+
+    // Log the final filters before the query
+    strapi.log.info(`Final filters applied: ${JSON.stringify(filters)}`);
+
+    // Execute the query with the filters and populate necessary relations
+    const entries = await strapi.db.query('api::library-content.library-content').findMany({
+      where: filters,
+      populate: ['cover', 'duration', 'points', 'tags', 'category', 'subcategories'],  // Populate necessary relations
+    });
+
+    // Log the number of results returned
+    strapi.log.info(`Number of results: ${entries.length}`);
+
+    // Format the response to include relevant fields and relations
+    const formattedEntries = entries.map(entry => ({
+      id: entry.id,
+      title: entry.title,
+      slug: entry.slug,
+      description_short: entry.description_short,
+      description_long: entry.description_long,
+      type: entry.type,
+      like_count: entry.like_count,
+      tileType: entry.tileType,
+      cover_url: entry.cover?.url || null,
+      duration: entry.duration || null,
+      points: entry.points || null,
+      category: entry.category?.name || null,
+      subcategories: entry.subcategories ? entry.subcategories.map(sub => sub.name) : [],
+      tags: entry.tags ? entry.tags.map(tag => tag.name) : [],  // Include tag names
+    }));
+
+    strapi.log.info('Formatted entries ready for response.');
+
+    return ctx.send({ data: formattedEntries });
+  },
+
   async search(ctx) {
     try {
       const { query } = ctx.request.query;
