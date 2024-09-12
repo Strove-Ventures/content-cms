@@ -894,7 +894,7 @@ export interface ApiCategoryCategory extends Schema.CollectionType {
   attributes: {
     name: Attribute.String;
     slug: Attribute.UID;
-    library_contents: Attribute.Relation<
+    libraryContents: Attribute.Relation<
       'api::category.category',
       'oneToMany',
       'api::library-content.library-content'
@@ -947,13 +947,13 @@ export interface ApiLibraryContentLibraryContent extends Schema.CollectionType {
         minLength: 2;
         maxLength: 128;
       }>;
-    description_short: Attribute.String &
+    descriptionShort: Attribute.String &
       Attribute.Required &
       Attribute.SetMinMaxLength<{
         minLength: 2;
         maxLength: 128;
       }>;
-    description_long: Attribute.Text;
+    descriptionLong: Attribute.Text;
     cover: Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
       Attribute.Required;
     author: Attribute.Relation<
@@ -964,29 +964,14 @@ export interface ApiLibraryContentLibraryContent extends Schema.CollectionType {
     body: Attribute.DynamicZone<
       ['shared.media', 'shared.actions', 'shared.slider', 'shared.rich-text']
     >;
-    tags: Attribute.Relation<
-      'api::library-content.library-content',
-      'manyToMany',
-      'api::tag.tag'
-    >;
-    category: Attribute.Relation<
-      'api::library-content.library-content',
-      'manyToOne',
-      'api::category.category'
-    >;
     duration: Attribute.Component<'shared.duration'>;
-    like_count: Attribute.BigInteger & Attribute.DefaultTo<'0'>;
+    likeCount: Attribute.BigInteger & Attribute.DefaultTo<'0'>;
     tileType: Attribute.Enumeration<
       ['large-tile', 'standard-tile', 'narrow-tile', 'long-tile']
     > &
       Attribute.Required &
       Attribute.DefaultTo<'standard-tile'>;
     seo: Attribute.Component<'shared.seo'> & Attribute.Required;
-    subcategories: Attribute.Relation<
-      'api::library-content.library-content',
-      'oneToMany',
-      'api::subcategory.subcategory'
-    >;
     richText: Attribute.RichText &
       Attribute.CustomField<
         'plugin::ckeditor5.CKEditor',
@@ -998,6 +983,21 @@ export interface ApiLibraryContentLibraryContent extends Schema.CollectionType {
       Attribute.Required &
       Attribute.DefaultTo<'article'>;
     points: Attribute.Component<'shared.points'>;
+    tags: Attribute.Relation<
+      'api::library-content.library-content',
+      'manyToMany',
+      'api::tag.tag'
+    >;
+    subCategories: Attribute.Relation<
+      'api::library-content.library-content',
+      'manyToMany',
+      'api::subcategory.subcategory'
+    >;
+    category: Attribute.Relation<
+      'api::library-content.library-content',
+      'manyToOne',
+      'api::category.category'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1107,20 +1107,19 @@ export interface ApiSubcategorySubcategory extends Schema.CollectionType {
     draftAndPublish: true;
   };
   attributes: {
-    Name: Attribute.String & Attribute.Required & Attribute.DefaultTo<'All'>;
-    slug: Attribute.UID<'api::subcategory.subcategory', 'Name'> &
-      Attribute.Required;
+    name: Attribute.String & Attribute.Required & Attribute.DefaultTo<'All'>;
+    slug: Attribute.UID & Attribute.Required;
     category: Attribute.Relation<
       'api::subcategory.subcategory',
       'manyToOne',
       'api::category.category'
     >;
-    library_content: Attribute.Relation<
+    order: Attribute.Integer & Attribute.Required & Attribute.DefaultTo<0>;
+    libraryContents: Attribute.Relation<
       'api::subcategory.subcategory',
-      'manyToOne',
+      'manyToMany',
       'api::library-content.library-content'
     >;
-    order: Attribute.Integer & Attribute.Required & Attribute.DefaultTo<0>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1154,7 +1153,7 @@ export interface ApiTagTag extends Schema.CollectionType {
     name: Attribute.String & Attribute.Required & Attribute.Unique;
     meta: Attribute.Component<'shared.seo'>;
     accent: Attribute.Enumeration<['accent-1', 'accent-2', 'accent-3']>;
-    library_contents: Attribute.Relation<
+    libraryContents: Attribute.Relation<
       'api::tag.tag',
       'manyToMany',
       'api::library-content.library-content'

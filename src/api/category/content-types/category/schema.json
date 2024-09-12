@@ -18,7 +18,7 @@
     "slug": {
       "type": "uid"
     },
-    "library_contents": {
+    "libraryContents": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::library-content.library-content",

@@ -30,7 +30,7 @@
         "accent-3"
       ]
     },
-    "library_contents": {
+    "libraryContents": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::library-content.library-content",

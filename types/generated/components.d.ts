@@ -105,7 +105,7 @@ export interface SharedLibrarySection extends Schema.Component {
   attributes: {
     order: Attribute.Integer;
     title: Attribute.String;
-    library_contents: Attribute.Relation<
+    libraryContents: Attribute.Relation<
       'shared.library-section',
       'oneToMany',
       'api::library-content.library-content'

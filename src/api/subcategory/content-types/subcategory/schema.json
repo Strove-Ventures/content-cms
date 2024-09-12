@@ -12,14 +12,13 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "Name": {
+    "name": {
       "type": "string",
       "required": true,
       "default": "All"
     },
     "slug": {
       "type": "uid",
-      "targetField": "Name",
       "required": true
     },
     "category": {
@@ -28,16 +27,16 @@
       "target": "api::category.category",
       "inversedBy": "subcategories"
     },
-    "library_content": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::library-content.library-content",
-      "inversedBy": "subcategories"
-    },
     "order": {
       "type": "integer",
       "default": 0,
       "required": true
+    },
+    "libraryContents": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::library-content.library-content",
+      "inversedBy": "subCategories"
     }
   }
 }

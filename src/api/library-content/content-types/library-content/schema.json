@@ -25,13 +25,13 @@
       "minLength": 2,
       "maxLength": 128
     },
-    "description_short": {
+    "descriptionShort": {
       "type": "string",
       "required": true,
       "minLength": 2,
       "maxLength": 128
     },
-    "description_long": {
+    "descriptionLong": {
       "type": "text"
     },
     "cover": {
@@ -59,24 +59,12 @@
         "shared.rich-text"
       ]
     },
-    "tags": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::tag.tag",
-      "inversedBy": "library_contents"
-    },
-    "category": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::category.category",
-      "inversedBy": "library_contents"
-    },
     "duration": {
       "type": "component",
       "repeatable": false,
       "component": "shared.duration"
     },
-    "like_count": {
+    "likeCount": {
       "type": "biginteger",
       "default": "0"
     },
@@ -96,12 +84,6 @@
       "repeatable": false,
       "component": "shared.seo",
       "required": true
-    },
-    "subcategories": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::subcategory.subcategory",
-      "mappedBy": "library_content"
     },
     "richText": {
       "type": "customField",
@@ -124,6 +106,24 @@
       "type": "component",
       "repeatable": false,
       "component": "shared.points"
+    },
+    "tags": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::tag.tag",
+      "mappedBy": "libraryContents"
+    },
+    "subCategories": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::subcategory.subcategory",
+      "mappedBy": "libraryContents"
+    },
+    "category": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::category.category",
+      "inversedBy": "libraryContents"
     }
   }
 }
