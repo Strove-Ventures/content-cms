@@ -8,16 +8,16 @@ const { createCoreController } = require('@strapi/strapi').factories;
 
 module.exports = createCoreController('api::user-like.user-like', ({ strapi }) => ({
   async likeContent(ctx) {
-    const { userId, contentId, organizationId } = ctx.params; // Take userId and organizationId as params
+    const { contentId } = ctx.params;
+    const { userId, organisationId } = ctx.query; // Get userId and organisationId from query
 
-    // Ensure that both userId and organizationId are provided
-    if (!userId || !organizationId) {
-      return ctx.badRequest('User ID and Organization ID are required');
+    if (!userId || !organisationId) {
+      return ctx.badRequest('User ID and Organisation ID are required');
     }
 
     // Check if the user has already liked the content within the organization
     const existingLike = await strapi.db.query('api::user-like.user-like').findOne({
-      where: { user: userId, libraryContent: contentId, organization: organizationId }
+      where: { user: userId, libraryContent: contentId, organization: organisationId }
     });
 
     if (existingLike) {
@@ -29,7 +29,7 @@ module.exports = createCoreController('api::user-like.user-like', ({ strapi }) =
       data: {
         user: userId,
         libraryContent: contentId,
-        organization: organizationId
+        organization: organisationId
       }
     });
 
@@ -43,16 +43,16 @@ module.exports = createCoreController('api::user-like.user-like', ({ strapi }) =
   },
 
   async unlikeContent(ctx) {
-    const { userId, contentId, organizationId } = ctx.params; // Take userId and organizationId as params
+    const { contentId } = ctx.params;
+    const { userId, organisationId } = ctx.query; // Get userId and organisationId from query
 
-    // Ensure that both userId and organizationId are provided
-    if (!userId || !organizationId) {
-      return ctx.badRequest('User ID and Organization ID are required');
+    if (!userId || !organisationId) {
+      return ctx.badRequest('User ID and Organisation ID are required');
     }
 
     // Check if the user has liked the content within the organization
     const existingLike = await strapi.db.query('api::user-like.user-like').findOne({
-      where: { user: userId, libraryContent: contentId, organization: organizationId }
+      where: { user: userId, libraryContent: contentId, organization: organisationId }
     });
 
     if (!existingLike) {
