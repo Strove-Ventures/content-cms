@@ -22,13 +22,14 @@ module.exports = createCoreController('api::library-content.library-content', ({
   },
 
   async find(ctx) {
-    const { category, tags, subcategories } = ctx.query;
+    const { category, tags, subcategories, organization } = ctx.query;
+    const userId = ctx.state.user?.id; // Get the user ID from the authenticated session
 
     // Initialize filters
     const filters = {};
 
     // Log the incoming query parameters
-    strapi.log.info(`Query params - Category: ${category}, Tags: ${tags}, Subcategories: ${subcategories}`);
+    strapi.log.info(`Query params - Category: ${category}, Tags: ${tags}, Subcategories: ${subcategories}, Organization: ${organization}`);
 
     const parseFilter = (filterValue) => {
       if (typeof filterValue === 'string') {
@@ -53,26 +54,39 @@ module.exports = createCoreController('api::library-content.library-content', ({
       strapi.log.info(`Tags filter applied: ${JSON.stringify(filters.tags)}`);
     }
 
-    // Parse the subcategories filter (correct name)
+    // Parse the subcategories filter
     const subcategoryIds = parseFilter(subcategories);
     if (subcategoryIds.length > 0) {
       filters.subCategories = { id: { $in: subcategoryIds } };  // Use correct camelCase 'subCategories'
       strapi.log.info(`Subcategories filter applied: ${JSON.stringify(filters.subCategories)}`);
     }
 
+    // Parse the organization filter
+    if (organization) {
+      filters.organization = { id: { $eq: Number(organization) } };  // Filter by organization
+      strapi.log.info(`Organization filter applied: ${JSON.stringify(filters.organization)}`);
+    }
+
     // Log the final filters
     strapi.log.info(`Final filters applied: ${JSON.stringify(filters)}`);
 
-    // Execute the query with the filters and populate necessary relations
+    // Fetch the library contents with the filters
     const entries = await strapi.db.query('api::library-content.library-content').findMany({
       where: filters,
       populate: ['cover', 'duration', 'points', 'tags', 'category', 'subCategories'],  // Use camelCase 'subCategories'
     });
 
-    // Log the number of results
-    strapi.log.info(`Number of results: ${entries.length}`);
+    // If the user is logged in, check if they have liked each content
+    let likedContentIds = [];
+    if (userId) {
+      const userLikes = await strapi.db.query('api::user-like.user-like').findMany({
+        where: { user: userId },
+        select: ['libraryContent']
+      });
+      likedContentIds = userLikes.map(like => like.libraryContent.id); // Extract the content IDs that the user liked
+    }
 
-    // Format the response
+    // Format the results with the "liked by me" status
     const formattedEntries = entries.map(entry => ({
       id: entry.id,
       title: entry.title,
@@ -81,13 +95,14 @@ module.exports = createCoreController('api::library-content.library-content', ({
       descriptionLong: entry.descriptionLong,
       type: entry.type,
       likeCount: entry.likeCount,
+      likedByMe: likedContentIds.includes(entry.id) || false,  // Check if the user has liked this content
       tileType: entry.tileType,
       coverUrl: entry.cover?.url || null,
       duration: entry.duration || null,
       points: entry.points || null,
       category: entry.category?.name || null,
-      subCategories: entry.subCategories ? entry.subCategories.map(sub => sub.name) : [],  // Use camelCase 'subCategories'
-      tags: entry.tags ? entry.tags.map(tag => tag.name) : [],  // Include tag names
+      subCategories: entry.subCategories ? entry.subCategories.map(sub => sub.name) : [],
+      tags: entry.tags ? entry.tags.map(tag => tag.name) : []
     }));
 
     return ctx.send({ data: formattedEntries });
@@ -183,5 +198,70 @@ module.exports = createCoreController('api::library-content.library-content', ({
       return ctx.internalServerError('Something went wrong during the search');
     }
   },
+  async likeContent(ctx) {
+    const userId = ctx.state.user?.id;
+    const { contentId } = ctx.params;
+
+    if (!userId) {
+      return ctx.unauthorized('You must be logged in to like content');
+    }
+
+    // Check if the user has already liked the content
+    const existingLike = await strapi.db.query('api::user-like.user-like').findOne({
+      where: { user: userId, libraryContent: contentId }
+    });
+
+    if (existingLike) {
+      return ctx.badRequest('You have already liked this content');
+    }
+
+    // Create a new like
+    const newLike = await strapi.db.query('api::user-like.user-like').create({
+      data: {
+        user: userId,
+        libraryContent: contentId
+      }
+    });
+
+    // Optionally, you could also increment the like count on the content
+    await strapi.db.query('api::library-content.library-content').update({
+      where: { id: contentId },
+      data: { likeCount: { $increment: 1 } }
+    });
+
+    return ctx.send({ data: newLike });
+  },
+  async unlikeContent(ctx) {
+    const userId = ctx.state.user?.id;
+    const { contentId } = ctx.params;
+
+    if (!userId) {
+      return ctx.unauthorized('You must be logged in to unlike content');
+    }
+
+    // Check if the user has liked the content
+    const existingLike = await strapi.db.query('api::user-like.user-like').findOne({
+      where: { user: userId, libraryContent: contentId }
+    });
+
+    if (!existingLike) {
+      return ctx.badRequest('You have not liked this content');
+    }
+
+    // Remove the like
+    await strapi.db.query('api::user-like.user-like').delete({
+      where: { id: existingLike.id }
+    });
+
+    // Optionally, decrement the like count on the content
+    await strapi.db.query('api::library-content.library-content').update({
+      where: { id: contentId },
+      data: { likeCount: { $decrement: 1 } }
+    });
+
+    return ctx.send({ message: 'Content unliked' });
+  }
+
+
 
 }));

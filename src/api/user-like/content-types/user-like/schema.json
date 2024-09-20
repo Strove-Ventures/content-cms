@@ -1,0 +1,34 @@
+{
+  "kind": "collectionType",
+  "collectionName": "user_likes",
+  "info": {
+    "singularName": "user-like",
+    "pluralName": "user-likes",
+    "displayName": "User Like",
+    "description": "Track which users like which content"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "required": true
+    },
+    "libraryContent": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::library-content.library-content",
+      "required": true
+    },
+    "createdAt": {
+      "type": "datetime",
+      "required": true,
+      "default": {
+        "$now": true
+      }
+    }
+  }
+}

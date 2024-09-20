@@ -1042,6 +1042,7 @@ export interface ApiLibraryContentLibraryContent extends Schema.CollectionType {
       'manyToOne',
       'api::category.category'
     >;
+    viewCount: Attribute.BigInteger & Attribute.DefaultTo<'0'>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1215,6 +1216,47 @@ export interface ApiTagTag extends Schema.CollectionType {
   };
 }
 
+export interface ApiUserLikeUserLike extends Schema.CollectionType {
+  collectionName: 'user_likes';
+  info: {
+    singularName: 'user-like';
+    pluralName: 'user-likes';
+    displayName: 'User Like';
+    description: 'Track which users like which content';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    user: Attribute.Relation<
+      'api::user-like.user-like',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    > &
+      Attribute.Required;
+    libraryContent: Attribute.Relation<
+      'api::user-like.user-like',
+      'manyToOne',
+      'api::library-content.library-content'
+    > &
+      Attribute.Required;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::user-like.user-like',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::user-like.user-like',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -1242,6 +1284,7 @@ declare module '@strapi/types' {
       'api::mobile-library.mobile-library': ApiMobileLibraryMobileLibrary;
       'api::subcategory.subcategory': ApiSubcategorySubcategory;
       'api::tag.tag': ApiTagTag;
+      'api::user-like.user-like': ApiUserLikeUserLike;
     }
   }
 }
