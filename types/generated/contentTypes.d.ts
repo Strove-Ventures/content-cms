@@ -1266,25 +1266,15 @@ export interface ApiUserLikeUserLike extends Schema.CollectionType {
     draftAndPublish: false;
   };
   attributes: {
-    user: Attribute.Relation<
-      'api::user-like.user-like',
-      'manyToOne',
-      'plugin::users-permissions.user'
-    > &
-      Attribute.Required;
+    createdAt: Attribute.DateTime;
     libraryContent: Attribute.Relation<
       'api::user-like.user-like',
       'manyToOne',
       'api::library-content.library-content'
     > &
       Attribute.Required;
-    organisation: Attribute.Relation<
-      'api::user-like.user-like',
-      'manyToOne',
-      'api::organisation.organisation'
-    > &
-      Attribute.Required;
-    createdAt: Attribute.DateTime;
+    userId: Attribute.UID & Attribute.Required;
+    orgId: Attribute.UID & Attribute.Required;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
       'api::user-like.user-like',

@@ -15,21 +15,21 @@ module.exports = createCoreController('api::user-like.user-like', ({ strapi }) =
       return ctx.badRequest('User ID and Organisation ID are required');
     }
 
-    // Check if the user has already liked the content within the organization
+    // Check if the user has already liked the content within the organisation
     const existingLike = await strapi.db.query('api::user-like.user-like').findOne({
-      where: { user: userId, libraryContent: contentId, organization: organisationId }
+      where: { userId, libraryContent: contentId, orgId: organisationId }
     });
 
     if (existingLike) {
       return ctx.badRequest('You have already liked this content');
     }
 
-    // Create a new like associated with the user and organization
+    // Create a new like associated with the user and organisation
     const newLike = await strapi.db.query('api::user-like.user-like').create({
       data: {
-        user: userId,
+        userId,
         libraryContent: contentId,
-        organization: organisationId
+        orgId: organisationId
       }
     });
 
@@ -50,9 +50,9 @@ module.exports = createCoreController('api::user-like.user-like', ({ strapi }) =
       return ctx.badRequest('User ID and Organisation ID are required');
     }
 
-    // Check if the user has liked the content within the organization
+    // Check if the user has liked the content within the organisation
     const existingLike = await strapi.db.query('api::user-like.user-like').findOne({
-      where: { user: userId, libraryContent: contentId, organization: organisationId }
+      where: { userId, libraryContent: contentId, orgId: organisationId }
     });
 
     if (!existingLike) {

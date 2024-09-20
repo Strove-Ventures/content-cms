@@ -11,11 +11,12 @@
     "draftAndPublish": false
   },
   "attributes": {
-    "user": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "plugin::users-permissions.user",
-      "required": true
+    "createdAt": {
+      "type": "datetime",
+      "required": true,
+      "default": {
+        "$now": true
+      }
     },
     "libraryContent": {
       "type": "relation",
@@ -23,18 +24,13 @@
       "target": "api::library-content.library-content",
       "required": true
     },
-    "organisation": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::organisation.organisation",
+    "userId": {
+      "type": "uid",
       "required": true
     },
-    "createdAt": {
-      "type": "datetime",
-      "required": true,
-      "default": {
-        "$now": true
-      }
+    "orgId": {
+      "type": "uid",
+      "required": true
     }
   }
 }
