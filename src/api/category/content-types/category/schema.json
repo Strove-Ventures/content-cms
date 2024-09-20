@@ -35,6 +35,11 @@
       "relation": "oneToMany",
       "target": "api::subcategory.subcategory",
       "mappedBy": "category"
+    },
+    "isDefault": {
+      "type": "boolean",
+      "default": false,
+      "required": true
     }
   }
 }

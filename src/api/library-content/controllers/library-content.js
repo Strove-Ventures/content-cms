@@ -95,7 +95,7 @@ module.exports = createCoreController('api::library-content.library-content', ({
 
   async search(ctx) {
     try {
-      const { query } = ctx.request.query;
+      const { query, tags, category, subcategory } = ctx.request.query;
 
       if (!query) {
         return ctx.badRequest('Query parameter is required');

@@ -37,6 +37,11 @@
       "relation": "manyToMany",
       "target": "api::library-content.library-content",
       "inversedBy": "subCategories"
+    },
+    "isDefault": {
+      "type": "boolean",
+      "default": false,
+      "required": true
     }
   }
 }

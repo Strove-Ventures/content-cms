@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2024-09-12T15:04:25.933Z"
+    "x-generation-date": "2024-09-20T16:00:21.273Z"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -3653,6 +3653,9 @@
         ],
         "properties": {
           "data": {
+            "required": [
+              "isDefault"
+            ],
             "type": "object",
             "properties": {
               "name": {
@@ -3694,6 +3697,9 @@
                   ],
                   "example": "string or id"
                 }
+              },
+              "isDefault": {
+                "type": "boolean"
               }
             }
           }
@@ -3747,6 +3753,9 @@
       },
       "Category": {
         "type": "object",
+        "required": [
+          "isDefault"
+        ],
         "properties": {
           "name": {
             "type": "string"
@@ -6083,6 +6092,9 @@
                                                       }
                                                     }
                                                   },
+                                                  "isDefault": {
+                                                    "type": "boolean"
+                                                  },
                                                   "createdAt": {
                                                     "type": "string",
                                                     "format": "date-time"
@@ -6153,6 +6165,9 @@
                                             }
                                           }
                                         }
+                                      },
+                                      "isDefault": {
+                                        "type": "boolean"
                                       },
                                       "createdAt": {
                                         "type": "string",
@@ -6302,6 +6317,9 @@
                 }
               }
             }
+          },
+          "isDefault": {
+            "type": "boolean"
           },
           "createdAt": {
             "type": "string",
@@ -9072,6 +9090,9 @@
                                                                     }
                                                                   }
                                                                 },
+                                                                "isDefault": {
+                                                                  "type": "boolean"
+                                                                },
                                                                 "createdAt": {
                                                                   "type": "string",
                                                                   "format": "date-time"
@@ -9142,6 +9163,9 @@
                                                           }
                                                         }
                                                       }
+                                                    },
+                                                    "isDefault": {
+                                                      "type": "boolean"
                                                     },
                                                     "createdAt": {
                                                       "type": "string",
@@ -12542,6 +12566,9 @@
                                                                     }
                                                                   }
                                                                 },
+                                                                "isDefault": {
+                                                                  "type": "boolean"
+                                                                },
                                                                 "createdAt": {
                                                                   "type": "string",
                                                                   "format": "date-time"
@@ -12612,6 +12639,9 @@
                                                           }
                                                         }
                                                       }
+                                                    },
+                                                    "isDefault": {
+                                                      "type": "boolean"
                                                     },
                                                     "createdAt": {
                                                       "type": "string",
@@ -15384,6 +15414,9 @@
                                                       }
                                                     }
                                                   },
+                                                  "isDefault": {
+                                                    "type": "boolean"
+                                                  },
                                                   "createdAt": {
                                                     "type": "string",
                                                     "format": "date-time"
@@ -15454,6 +15487,9 @@
                                             }
                                           }
                                         }
+                                      },
+                                      "isDefault": {
+                                        "type": "boolean"
                                       },
                                       "createdAt": {
                                         "type": "string",
@@ -15599,7 +15635,8 @@
             "required": [
               "name",
               "slug",
-              "order"
+              "order",
+              "isDefault"
             ],
             "type": "object",
             "properties": {
@@ -15636,6 +15673,9 @@
                   ],
                   "example": "string or id"
                 }
+              },
+              "isDefault": {
+                "type": "boolean"
               }
             }
           }
@@ -15692,7 +15732,8 @@
         "required": [
           "name",
           "slug",
-          "order"
+          "order",
+          "isDefault"
         ],
         "properties": {
           "name": {
@@ -18024,6 +18065,9 @@
                                                       }
                                                     }
                                                   },
+                                                  "isDefault": {
+                                                    "type": "boolean"
+                                                  },
                                                   "createdAt": {
                                                     "type": "string",
                                                     "format": "date-time"
@@ -18173,6 +18217,9 @@
                           }
                         }
                       },
+                      "isDefault": {
+                        "type": "boolean"
+                      },
                       "createdAt": {
                         "type": "string",
                         "format": "date-time"
@@ -18243,6 +18290,9 @@
                 }
               }
             }
+          },
+          "isDefault": {
+            "type": "boolean"
           },
           "createdAt": {
             "type": "string",
@@ -20270,6 +20320,9 @@
                                                       }
                                                     }
                                                   },
+                                                  "isDefault": {
+                                                    "type": "boolean"
+                                                  },
                                                   "createdAt": {
                                                     "type": "string",
                                                     "format": "date-time"
@@ -20340,6 +20393,9 @@
                                             }
                                           }
                                         }
+                                      },
+                                      "isDefault": {
+                                        "type": "boolean"
                                       },
                                       "createdAt": {
                                         "type": "string",

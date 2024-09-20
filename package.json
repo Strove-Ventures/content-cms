@@ -19,6 +19,7 @@
     "react-dom": "^18.0.0",
     "react-router-dom": "5.3.4",
     "strapi-plugin-import-export-entries": "^1.23.1",
+    "strapi-plugin-publisher": "^1.5.7",
     "strapi-plugin-responsive-image": "^1.2.0",
     "strapi-plugin-rest-cache": "^4.2.9",
     "strapi-prometheus": "^1.9.1",
