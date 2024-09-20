@@ -109,18 +109,59 @@ module.exports = createCoreController('api::library-content.library-content', ({
         [field]: { $containsi: query }
       }));
 
+      // Initialize filters for categories, subcategories, and tags
+      const filters = {
+        $or: orConditions
+      };
+
+      // Handle category filtering with 'isDefault' check
+      if (category) {
+        // Fetch the category and check for 'isDefault'
+        const categoryRecord = await strapi.db.query('api::category.category').findOne({
+          where: {
+            $or: [
+              { id: category },
+              { isDefault: true }
+            ]
+          }
+        });
+
+        // If category exists or is default, apply the filter
+        if (categoryRecord) {
+          filters.category = { id: categoryRecord.id };
+        }
+      }
+
+      // Handle subcategory filtering with 'isDefault' check
+      if (subcategory) {
+        // Fetch the subcategory and check for 'isDefault'
+        const subcategoryRecord = await strapi.db.query('api::subcategory.subcategory').findOne({
+          where: {
+            $or: [
+              { id: subcategory },
+              { isDefault: true }
+            ]
+          }
+        });
+
+        // If subcategory exists or is default, apply the filter
+        if (subcategoryRecord) {
+          filters.subCategories = { id: subcategoryRecord.id };
+        }
+      }
+
+      // Handle tags filtering if provided in the URL
+      if (tags) {
+        const tagIds = tags.split(',').map(Number); // assuming tags are passed as comma-separated IDs
+        filters.tags = { id: { $in: tagIds } };
+      }
+
       // Perform the search across fields, categories, subcategories, and tags
       const entries = await strapi.db.query('api::library-content.library-content').findMany({
-        where: {
-          $or: [
-            ...orConditions,  // Search across the library-content fields
-            { category: { name: { $containsi: query } } },  // Search in categories
-            { subCategories: { name: { $containsi: query } } },  // Search in subcategories
-            { tags: { name: { $containsi: query } } }  // Search in tags
-          ]
-        },
-        populate: ['cover', 'duration', 'points', 'tags', 'category', 'subCategories']  // Populate necessary relations
+        where: filters,
+        populate: ['cover', 'duration', 'points', 'tags', 'category', 'subCategories'] // Populate necessary relations
       });
+
 
       // Format the results to include necessary details
       const formattedEntries = entries.map(entry => ({
