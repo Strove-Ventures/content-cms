@@ -124,6 +124,10 @@
       "relation": "manyToOne",
       "target": "api::category.category",
       "inversedBy": "libraryContents"
+    },
+    "viewCount": {
+      "type": "biginteger",
+      "default": "0"
     }
   }
 }
