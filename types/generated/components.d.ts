@@ -118,6 +118,11 @@ export interface SharedLibrarySection extends Schema.Component {
         'long-tile-list'
       ]
     >;
+    category: Attribute.Relation<
+      'shared.library-section',
+      'oneToOne',
+      'api::category.category'
+    >;
   };
 }
 

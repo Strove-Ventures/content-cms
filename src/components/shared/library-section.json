@@ -25,6 +25,11 @@
         "narrow-tile-list",
         "long-tile-list"
       ]
+    },
+    "category": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::category.category"
     }
   }
 }
