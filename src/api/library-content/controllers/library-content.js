@@ -21,6 +21,51 @@ module.exports = createCoreController('api::library-content.library-content', ({
     return ctx.send({ data: updatedEntry });
   },
 
+  async findOne(ctx) {
+    const { id } = ctx.params;
+    const userId = ctx.state.user?.id; // Get the user ID from the authenticated session
+
+    // Fetch the library content by ID
+    const entry = await strapi.db.query('api::library-content.library-content').findOne({
+      where: { id },
+      populate: ['cover', 'duration', 'points', 'tags', 'category', 'subCategories'],  // Use camelCase 'subCategories'
+    });
+
+    if (!entry) {
+      return ctx.notFound('Content not found');
+    }
+
+    // If the user is logged in, check if they have liked this content
+    let likedByMe = false;
+    if (userId) {
+      const userLike = await strapi.db.query('api::user-like.user-like').findOne({
+        where: { user: userId, libraryContent: id }
+      });
+      likedByMe = !!userLike; // If the user has liked it, set likedByMe to true
+    }
+
+    // Format the response with the "liked by me" status
+    const formattedEntry = {
+      id: entry.id,
+      title: entry.title,
+      slug: entry.slug,
+      descriptionShort: entry.descriptionShort,
+      descriptionLong: entry.descriptionLong,
+      type: entry.type,
+      likeCount: entry.likeCount,
+      likedByMe,  // Include liked by me status
+      tileType: entry.tileType,
+      coverUrl: entry.cover?.url || null,
+      duration: entry.duration || null,
+      points: entry.points || null,
+      category: entry.category?.name || null,
+      subCategories: entry.subCategories ? entry.subCategories.map(sub => sub.name) : [],
+      tags: entry.tags ? entry.tags.map(tag => tag.name) : [],
+    };
+
+    return ctx.send({ data: formattedEntry });
+  },
+
   async find(ctx) {
     const { category, tags, subcategories, organization } = ctx.query;
     const userId = ctx.state.user?.id; // Get the user ID from the authenticated session
