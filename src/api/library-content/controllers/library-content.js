@@ -111,6 +111,7 @@ module.exports = createCoreController('api::library-content.library-content', ({
   async search(ctx) {
     try {
       const { query, tags, category, subcategory } = ctx.request.query;
+      const userId = ctx.state.user?.id; // Get the user ID from the authenticated session
 
       if (!query) {
         return ctx.badRequest('Query parameter is required');
@@ -173,8 +174,17 @@ module.exports = createCoreController('api::library-content.library-content', ({
         populate: ['cover', 'duration', 'points', 'tags', 'category', 'subCategories']  // Populate necessary relations
       });
 
+      // If the user is logged in, check if they have liked each content
+      let likedContentIds = [];
+      if (userId) {
+        const userLikes = await strapi.db.query('api::user-like.user-like').findMany({
+          where: { user: userId },
+          select: ['libraryContent']
+        });
+        likedContentIds = userLikes.map(like => like.libraryContent.id); // Extract the content IDs that the user liked
+      }
 
-      // Format the results to include necessary details
+      // Format the results to include necessary details and 'liked by me' status
       const formattedEntries = entries.map(entry => ({
         id: entry.id,
         title: entry.title,
@@ -183,6 +193,7 @@ module.exports = createCoreController('api::library-content.library-content', ({
         descriptionLong: entry.descriptionLong,
         type: entry.type,
         likeCount: entry.likeCount,
+        likedByMe: likedContentIds.includes(entry.id) || false,  // Check if the user has liked this content
         tileType: entry.tileType,
         coverUrl: entry.cover?.url || null,
         duration: entry.duration || null,
@@ -198,6 +209,7 @@ module.exports = createCoreController('api::library-content.library-content', ({
       return ctx.internalServerError('Something went wrong during the search');
     }
   },
+
   async likeContent(ctx) {
     const userId = ctx.state.user?.id;
     const { contentId } = ctx.params;
