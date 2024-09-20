@@ -114,40 +114,36 @@ module.exports = createCoreController('api::library-content.library-content', ({
         $or: orConditions
       };
 
-      // Handle category filtering with 'isDefault' check
+      // Handle category filtering
       if (category) {
         // Fetch the category and check for 'isDefault'
         const categoryRecord = await strapi.db.query('api::category.category').findOne({
           where: {
-            $or: [
-              { id: category },
-              { isDefault: true }
-            ]
+            id: category
           }
         });
 
-        // If category exists or is default, apply the filter
-        if (categoryRecord) {
+        // If category exists and is not default, apply the filter
+        if (categoryRecord && !categoryRecord.isDefault) {
           filters.category = { id: categoryRecord.id };
         }
+        // If isDefault is true, no filter for category is applied (search over all categories)
       }
 
-      // Handle subcategory filtering with 'isDefault' check
+      // Handle subcategory filtering
       if (subcategory) {
         // Fetch the subcategory and check for 'isDefault'
         const subcategoryRecord = await strapi.db.query('api::subcategory.subcategory').findOne({
           where: {
-            $or: [
-              { id: subcategory },
-              { isDefault: true }
-            ]
+            id: subcategory
           }
         });
 
-        // If subcategory exists or is default, apply the filter
-        if (subcategoryRecord) {
+        // If subcategory exists and is not default, apply the filter
+        if (subcategoryRecord && !subcategoryRecord.isDefault) {
           filters.subCategories = { id: subcategoryRecord.id };
         }
+        // If isDefault is true, no filter for subcategory is applied (search over all subcategories)
       }
 
       // Handle tags filtering if provided in the URL
@@ -159,7 +155,7 @@ module.exports = createCoreController('api::library-content.library-content', ({
       // Perform the search across fields, categories, subcategories, and tags
       const entries = await strapi.db.query('api::library-content.library-content').findMany({
         where: filters,
-        populate: ['cover', 'duration', 'points', 'tags', 'category', 'subCategories'] // Populate necessary relations
+        populate: ['cover', 'duration', 'points', 'tags', 'category', 'subCategories']  // Populate necessary relations
       });
 
 
