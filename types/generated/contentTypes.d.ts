@@ -1140,6 +1140,44 @@ export interface ApiMobileLibraryMobileLibrary extends Schema.SingleType {
   };
 }
 
+export interface ApiOrganisationOrganisation extends Schema.CollectionType {
+  collectionName: 'organisations';
+  info: {
+    singularName: 'organisation';
+    pluralName: 'organisations';
+    displayName: 'Organisation';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String &
+      Attribute.Required &
+      Attribute.SetMinMaxLength<{
+        maxLength: 100;
+      }>;
+    orgId: Attribute.UID<'api::organisation.organisation', 'name'> &
+      Attribute.Required;
+    description: Attribute.Text;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::organisation.organisation',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::organisation.organisation',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiSubcategorySubcategory extends Schema.CollectionType {
   collectionName: 'subcategories';
   info: {
@@ -1222,7 +1260,7 @@ export interface ApiUserLikeUserLike extends Schema.CollectionType {
     singularName: 'user-like';
     pluralName: 'user-likes';
     displayName: 'User Like';
-    description: 'Track which users like which content';
+    description: 'Track which users like which content, along with the associated organization.';
   };
   options: {
     draftAndPublish: false;
@@ -1238,6 +1276,12 @@ export interface ApiUserLikeUserLike extends Schema.CollectionType {
       'api::user-like.user-like',
       'manyToOne',
       'api::library-content.library-content'
+    > &
+      Attribute.Required;
+    organisation: Attribute.Relation<
+      'api::user-like.user-like',
+      'manyToOne',
+      'api::organisation.organisation'
     > &
       Attribute.Required;
     createdAt: Attribute.DateTime;
@@ -1282,6 +1326,7 @@ declare module '@strapi/types' {
       'api::library-content.library-content': ApiLibraryContentLibraryContent;
       'api::mobile-content-filter.mobile-content-filter': ApiMobileContentFilterMobileContentFilter;
       'api::mobile-library.mobile-library': ApiMobileLibraryMobileLibrary;
+      'api::organisation.organisation': ApiOrganisationOrganisation;
       'api::subcategory.subcategory': ApiSubcategorySubcategory;
       'api::tag.tag': ApiTagTag;
       'api::user-like.user-like': ApiUserLikeUserLike;

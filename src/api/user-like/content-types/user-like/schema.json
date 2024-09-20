@@ -5,7 +5,7 @@
     "singularName": "user-like",
     "pluralName": "user-likes",
     "displayName": "User Like",
-    "description": "Track which users like which content"
+    "description": "Track which users like which content, along with the associated organization."
   },
   "options": {
     "draftAndPublish": false
@@ -21,6 +21,12 @@
       "type": "relation",
       "relation": "manyToOne",
       "target": "api::library-content.library-content",
+      "required": true
+    },
+    "organisation": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::organisation.organisation",
       "required": true
     },
     "createdAt": {
