@@ -28,7 +28,7 @@ module.exports = createCoreController('api::library-content.library-content', ({
     // Fetch the library content by ID
     const entry = await strapi.db.query('api::library-content.library-content').findOne({
       where: { id },
-      populate: ['cover', 'duration', 'points', 'tags', 'category', 'subCategories'],  // Use camelCase 'subCategories'
+      populate: ['cover', 'duration', 'points', 'tags', 'category', 'subCategories', 'type', 'body'],  // Use camelCase 'subCategories'
     });
 
     if (!entry) {
@@ -55,12 +55,14 @@ module.exports = createCoreController('api::library-content.library-content', ({
       likeCount: entry.likeCount,
       likedByMe,  // Include liked by me status
       tileType: entry.tileType,
+      type: entry.type,
+      body: entry.body || null,
       coverUrl: entry.cover?.url || null,
       duration: entry.duration || null,
       points: entry.points || null,
       category: entry.category?.name || null,
-      subCategories: entry.subCategories ? entry.subCategories.map(sub => sub.name) : [],
-      tags: entry.tags ? entry.tags.map(tag => tag.name) : [],
+      subCategories: entry.subCategories ? entry.subCategories.map(sub => sub.name) : null,
+      tags: entry.tags ? entry.tags.map(tag => tag.name) : null,
     };
 
     return ctx.send({ data: formattedEntry });
@@ -118,7 +120,7 @@ module.exports = createCoreController('api::library-content.library-content', ({
     // Fetch the library contents with the filters
     const entries = await strapi.db.query('api::library-content.library-content').findMany({
       where: filters,
-      populate: ['cover', 'duration', 'points', 'tags', 'category', 'subCategories'],  // Use camelCase 'subCategories'
+      populate: ['cover', 'duration', 'points', 'tags', 'category', 'subCategories', 'type'],  // Use camelCase 'subCategories'
     });
 
     // If the user is logged in, check if they have liked each content
@@ -144,10 +146,11 @@ module.exports = createCoreController('api::library-content.library-content', ({
       tileType: entry.tileType,
       coverUrl: entry.cover?.url || null,
       duration: entry.duration || null,
+      type: entry.type,
       points: entry.points || null,
       category: entry.category?.name || null,
-      subCategories: entry.subCategories ? entry.subCategories.map(sub => sub.name) : [],
-      tags: entry.tags ? entry.tags.map(tag => tag.name) : []
+      subCategories: entry.subCategories ? entry.subCategories.map(sub => sub.name) : null,
+      tags: entry.tags ? entry.tags.map(tag => tag.name) : null
     }));
 
     return ctx.send({ data: formattedEntries });
@@ -175,6 +178,16 @@ module.exports = createCoreController('api::library-content.library-content', ({
         $or: orConditions
       };
 
+      const parseFilter = (filterValue) => {
+        if (typeof filterValue === 'string') {
+          const cleanedValue = filterValue.replace(/[\[\]\s]/g, '');  // Remove brackets and spaces
+          return cleanedValue.split(',').map(Number);  // Split by comma and convert to numbers
+        } else if (Array.isArray(filterValue)) {
+          return filterValue.map(Number);
+        }
+        return [];
+      };
+
       // Handle category filtering
       if (category) {
         // Fetch the category and check for 'isDefault'
@@ -193,30 +206,24 @@ module.exports = createCoreController('api::library-content.library-content', ({
 
       // Handle subcategory filtering
       if (subcategory) {
-        // Fetch the subcategory and check for 'isDefault'
-        const subcategoryRecord = await strapi.db.query('api::subcategory.subcategory').findOne({
-          where: {
-            id: subcategory
-          }
-        });
-
-        // If subcategory exists and is not default, apply the filter
-        if (subcategoryRecord && !subcategoryRecord.isDefault) {
-          filters.subCategories = { id: subcategoryRecord.id };
+        const subcategoryIds = parseFilter(subcategory);
+        if (subcategoryIds.length > 0) {
+          filters.subCategories = { id: { $in: subcategoryIds } };
         }
-        // If isDefault is true, no filter for subcategory is applied (search over all subcategories)
       }
 
-      // Handle tags filtering if provided in the URL
+      // Handle tags filtering
       if (tags) {
-        const tagIds = tags.split(',').map(Number); // assuming tags are passed as comma-separated IDs
-        filters.tags = { id: { $in: tagIds } };
+        const tagIds = parseFilter(tags);
+        if (tagIds.length > 0) {
+          filters.tags = { id: { $in: tagIds } };
+        }
       }
 
       // Perform the search across fields, categories, subcategories, and tags
       const entries = await strapi.db.query('api::library-content.library-content').findMany({
         where: filters,
-        populate: ['cover', 'duration', 'points', 'tags', 'category', 'subCategories']  // Populate necessary relations
+        populate: ['cover', 'duration', 'points', 'tags', 'category', 'subCategories', 'type', 'body'],
       });
 
       // If the user is logged in, check if they have liked each content
@@ -240,6 +247,7 @@ module.exports = createCoreController('api::library-content.library-content', ({
         likeCount: entry.likeCount,
         likedByMe: likedContentIds.includes(entry.id) || false,  // Check if the user has liked this content
         tileType: entry.tileType,
+        type: entry.type,
         coverUrl: entry.cover?.url || null,
         duration: entry.duration || null,
         points: entry.points || null,
