@@ -60,9 +60,9 @@ module.exports = createCoreController('api::library-content.library-content', ({
       coverUrl: entry.cover?.url || null,
       duration: entry.duration || null,
       points: entry.points || null,
-      category: entry.category?.name || null,
-      subCategories: entry.subCategories ? entry.subCategories.map(sub => sub.name) : null,
-      tags: entry.tags ? entry.tags.map(tag => tag.name) : null,
+      category: entry.category?.id || null,
+      subCategories: entry.subCategories ? entry.subCategories.map(sub => sub.id) : null,
+      tags: entry.tags ? entry.tags.map(tag => tag.id) : null,
     };
 
     return ctx.send({ data: formattedEntry });
@@ -88,24 +88,36 @@ module.exports = createCoreController('api::library-content.library-content', ({
       return [];
     };
 
-    // Parse the category filter
+    // Handle category filtering
     if (category) {
-      filters.category = { id: { $eq: Number(category) } };
-      strapi.log.info(`Category filter applied: ${JSON.stringify(filters.category)}`);
+      // Fetch the category and check for 'isDefault'
+      const categoryRecord = await strapi.db.query('api::category.category').findOne({
+        where: {
+          id: category
+        }
+      });
+
+      // If category exists and is not default, apply the filter
+      if (categoryRecord && !categoryRecord.isDefault) {
+        filters.category = { id: categoryRecord.id };
+      }
+      // If isDefault is true, no filter for category is applied (search over all categories)
     }
 
-    // Parse the tags filter
-    const tagIds = parseFilter(tags);
-    if (tagIds.length > 0) {
-      filters.tags = { id: { $in: tagIds } };
-      strapi.log.info(`Tags filter applied: ${JSON.stringify(filters.tags)}`);
+    // Handle subcategory filtering
+    if (subcategories) {
+      const subcategoryIds = parseFilter(subcategories);
+      if (subcategoryIds.length > 0) {
+        filters.subCategories = { id: { $in: subcategoryIds } };
+      }
     }
 
-    // Parse the subcategories filter
-    const subcategoryIds = parseFilter(subcategories);
-    if (subcategoryIds.length > 0) {
-      filters.subCategories = { id: { $in: subcategoryIds } };  // Use correct camelCase 'subCategories'
-      strapi.log.info(`Subcategories filter applied: ${JSON.stringify(filters.subCategories)}`);
+    // Handle tags filtering
+    if (tags) {
+      const tagIds = parseFilter(tags);
+      if (tagIds.length > 0) {
+        filters.tags = { id: { $in: tagIds } };
+      }
     }
 
     // Parse the organization filter
@@ -148,9 +160,9 @@ module.exports = createCoreController('api::library-content.library-content', ({
       duration: entry.duration || null,
       type: entry.type,
       points: entry.points || null,
-      category: entry.category?.name || null,
-      subCategories: entry.subCategories ? entry.subCategories.map(sub => sub.name) : null,
-      tags: entry.tags ? entry.tags.map(tag => tag.name) : null
+      category: entry.category?.id || null,
+      subCategories: entry.subCategories ? entry.subCategories.map(sub => sub.id) : null,
+      tags: entry.tags ? entry.tags.map(tag => tag.id) : null
     }));
 
     return ctx.send({ data: formattedEntries });
@@ -251,9 +263,9 @@ module.exports = createCoreController('api::library-content.library-content', ({
         coverUrl: entry.cover?.url || null,
         duration: entry.duration || null,
         points: entry.points || null,
-        category: entry.category?.name || null,
-        subCategories: entry.subCategories ? entry.subCategories.map(sub => sub.name) : [],  // Include subcategory names
-        tags: entry.tags ? entry.tags.map(tag => tag.name) : [],  // Include tag names
+        category: entry.category?.id || null,
+        subCategories: entry.subCategories ? entry.subCategories.map(sub => sub.id) : null,  // Include subcategory names
+        tags: entry.tags ? entry.tags.map(tag => tag.id) : null,  // Include tag names
       }));
 
       return ctx.send({ data: formattedEntries });
