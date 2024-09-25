@@ -28,7 +28,7 @@ module.exports = createCoreController('api::library-content.library-content', ({
     // Fetch the library content by ID
     const entry = await strapi.db.query('api::library-content.library-content').findOne({
       where: { id },
-      populate: ['cover', 'duration', 'points', 'tags', 'category', 'subCategories', 'type', 'body'],  // Use camelCase 'subCategories'
+      populate: ['cover', 'duration', 'points', 'tags', 'category', 'subCategories', 'type', 'body', 'richText'],  // Use camelCase 'subCategories'
     });
 
     if (!entry) {
@@ -63,6 +63,7 @@ module.exports = createCoreController('api::library-content.library-content', ({
       category: entry.category?.id || null,
       subCategories: entry.subCategories ? entry.subCategories.map(sub => sub.id) : null,
       tags: entry.tags ? entry.tags.map(tag => tag.id) : null,
+      richText: entry.richText || null,
     };
 
     return ctx.send({ data: formattedEntry });
