@@ -28,7 +28,7 @@ module.exports = createCoreController('api::library-content.library-content', ({
     // Fetch the library content by ID
     const entry = await strapi.db.query('api::library-content.library-content').findOne({
       where: { id },
-      populate: ['cover', 'duration', 'points', 'tags', 'category', 'subCategories', 'type', 'body', 'richText'],  // Use camelCase 'subCategories'
+      populate: ['cover', 'duration', 'points', 'tags', 'category', 'subCategories', 'type', 'body', 'richText', 'author'],  // Use camelCase 'subCategories'
     });
 
     if (!entry) {
@@ -57,13 +57,15 @@ module.exports = createCoreController('api::library-content.library-content', ({
       tileType: entry.tileType,
       type: entry.type,
       body: entry.body || null,
+      author: entry.author || null,
       coverUrl: entry.cover?.url || null,
       duration: entry.duration || null,
       points: entry.points || null,
       category: entry.category?.id || null,
       subCategories: entry.subCategories ? entry.subCategories.map(sub => sub.id) : null,
-      tags: entry.tags ? entry.tags.map(tag => tag.id) : null,
+      tags: entry.tags ? entry.tags.map(tag => ({ id: tag.id, accent: tag.accent, name: tag.name })) : null,
       richText: entry.richText || null,
+      createdAt: entry.createdAt
     };
 
     return ctx.send({ data: formattedEntry });
