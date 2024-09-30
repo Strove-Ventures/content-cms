@@ -1,17 +1,17 @@
-import type { Schema, Attribute } from '@strapi/strapi';
+import type { Struct, Schema } from '@strapi/strapi';
 
-export interface SharedTileCollection extends Schema.Component {
+export interface SharedTileCollection extends Struct.ComponentSchema {
   collectionName: 'components_shared_tile_collections';
   info: {
     displayName: 'Tile collection';
     description: '';
   };
   attributes: {
-    tiles: Attribute.Component<'shared.content-tile'>;
+    tiles: Schema.Attribute.Component<'shared.content-tile', false>;
   };
 }
 
-export interface SharedSlider extends Schema.Component {
+export interface SharedSlider extends Struct.ComponentSchema {
   collectionName: 'components_shared_sliders';
   info: {
     displayName: 'Slider';
@@ -19,11 +19,11 @@ export interface SharedSlider extends Schema.Component {
     description: '';
   };
   attributes: {
-    files: Attribute.Media<'images', true>;
+    files: Schema.Attribute.Media<'images', true>;
   };
 }
 
-export interface SharedSeo extends Schema.Component {
+export interface SharedSeo extends Struct.ComponentSchema {
   collectionName: 'components_shared_seos';
   info: {
     name: 'Seo';
@@ -32,114 +32,93 @@ export interface SharedSeo extends Schema.Component {
     description: '';
   };
   attributes: {
-    metaTitle: Attribute.String & Attribute.Required;
-    metaDescription: Attribute.Text & Attribute.Required;
-    shareImage: Attribute.Media<'images'>;
+    metaTitle: Schema.Attribute.String & Schema.Attribute.Required;
+    metaDescription: Schema.Attribute.Text & Schema.Attribute.Required;
+    shareImage: Schema.Attribute.Media<'images'>;
   };
 }
 
-export interface SharedRicherText extends Schema.Component {
-  collectionName: 'components_shared_richer_texts';
-  info: {
-    displayName: 'Richer Text';
-  };
-  attributes: {};
-}
-
-export interface SharedRichText extends Schema.Component {
-  collectionName: 'components_shared_rich_texts';
-  info: {
-    displayName: 'Rich text';
-    icon: 'align-justify';
-    description: '';
-  };
-  attributes: {
-    body: Attribute.RichText;
-  };
-}
-
-export interface SharedQuote extends Schema.Component {
+export interface SharedQuote extends Struct.ComponentSchema {
   collectionName: 'components_shared_quotes';
   info: {
     displayName: 'Quote';
     icon: 'indent';
   };
   attributes: {
-    title: Attribute.String;
-    body: Attribute.Text;
+    title: Schema.Attribute.String;
+    body: Schema.Attribute.Text;
   };
 }
 
-export interface SharedPoints extends Schema.Component {
+export interface SharedPoints extends Struct.ComponentSchema {
   collectionName: 'components_shared_points';
   info: {
     displayName: 'points';
     description: '';
   };
   attributes: {
-    value: Attribute.Integer & Attribute.Required & Attribute.DefaultTo<1>;
-    earnable: Attribute.Boolean & Attribute.DefaultTo<true>;
-    imageUrl: Attribute.String &
-      Attribute.Required &
-      Attribute.DefaultTo<'https://lively-crystal-f13b3a6e8c.media.strapiapp.com/Asset_339_4x_1_48fc1f359f.png'>;
+    value: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<1>;
+    earnable: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    imageUrl: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'https://lively-crystal-f13b3a6e8c.media.strapiapp.com/Asset_339_4x_1_48fc1f359f.png'>;
   };
 }
 
-export interface SharedMedia extends Schema.Component {
+export interface SharedMedia extends Struct.ComponentSchema {
   collectionName: 'components_shared_media';
   info: {
     displayName: 'Media';
     icon: 'file-video';
   };
   attributes: {
-    file: Attribute.Media<'images' | 'files' | 'videos'>;
+    file: Schema.Attribute.Media<'images' | 'files' | 'videos'>;
   };
 }
 
-export interface SharedLibrarySection extends Schema.Component {
+export interface SharedLibrarySection extends Struct.ComponentSchema {
   collectionName: 'components_shared_library_sections';
   info: {
     displayName: 'Library section';
     description: '';
   };
   attributes: {
-    order: Attribute.Integer;
-    title: Attribute.String;
-    libraryContents: Attribute.Relation<
-      'shared.library-section',
+    order: Schema.Attribute.Integer;
+    title: Schema.Attribute.String;
+    libraryContents: Schema.Attribute.Relation<
       'oneToMany',
       'api::library-content.library-content'
     >;
-    type: Attribute.Enumeration<
+    type: Schema.Attribute.Enumeration<
       [
         'large-tile-list',
         'standard-tile-list',
         'narrow-tile-list',
-        'long-tile-list'
+        'long-tile-list',
       ]
     >;
-    category: Attribute.Relation<
-      'shared.library-section',
-      'oneToOne',
-      'api::category.category'
-    >;
+    category: Schema.Attribute.Relation<'oneToOne', 'api::category.category'>;
   };
 }
 
-export interface SharedFilterTags extends Schema.Component {
+export interface SharedFilterTags extends Struct.ComponentSchema {
   collectionName: 'components_shared_filter_tags';
   info: {
     displayName: 'Filter tags';
     description: '';
   };
   attributes: {
-    tags: Attribute.Relation<'shared.filter-tags', 'oneToMany', 'api::tag.tag'>;
-    title: Attribute.String & Attribute.Required;
-    order: Attribute.Integer & Attribute.Required & Attribute.DefaultTo<1>;
+    tags: Schema.Attribute.Relation<'oneToMany', 'api::tag.tag'>;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    order: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<1>;
   };
 }
 
-export interface SharedDuration extends Schema.Component {
+export interface SharedDuration extends Struct.ComponentSchema {
   collectionName: 'components_shared_durations';
   info: {
     displayName: 'Duration';
@@ -147,50 +126,47 @@ export interface SharedDuration extends Schema.Component {
     description: '';
   };
   attributes: {
-    label: Attribute.String & Attribute.DefaultTo<'min'>;
-    value: Attribute.Integer & Attribute.Required;
-    imageUrl: Attribute.String &
-      Attribute.Required &
-      Attribute.DefaultTo<'https://lively-crystal-f13b3a6e8c.media.strapiapp.com/clock_cabec89325.png'>;
+    label: Schema.Attribute.String & Schema.Attribute.DefaultTo<'min'>;
+    value: Schema.Attribute.Integer & Schema.Attribute.Required;
+    imageUrl: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'https://lively-crystal-f13b3a6e8c.media.strapiapp.com/clock_cabec89325.png'>;
   };
 }
 
-export interface SharedContentTile extends Schema.Component {
+export interface SharedContentTile extends Struct.ComponentSchema {
   collectionName: 'components_shared_content_tiles';
   info: {
     displayName: 'content tile';
     description: '';
   };
   attributes: {
-    contents: Attribute.Relation<
-      'shared.content-tile',
+    contents: Schema.Attribute.Relation<
       'oneToMany',
       'api::library-content.library-content'
     >;
   };
 }
 
-export interface SharedActions extends Schema.Component {
+export interface SharedActions extends Struct.ComponentSchema {
   collectionName: 'components_shared_actions';
   info: {
     displayName: 'Actions';
     description: '';
   };
   attributes: {
-    action_type: Attribute.String;
-    action_label: Attribute.String;
-    action_url: Attribute.String;
+    action_type: Schema.Attribute.String;
+    action_label: Schema.Attribute.String;
+    action_url: Schema.Attribute.String;
   };
 }
 
-declare module '@strapi/types' {
-  export module Shared {
-    export interface Components {
+declare module '@strapi/strapi' {
+  export module Public {
+    export interface ComponentSchemas {
       'shared.tile-collection': SharedTileCollection;
       'shared.slider': SharedSlider;
       'shared.seo': SharedSeo;
-      'shared.richer-text': SharedRicherText;
-      'shared.rich-text': SharedRichText;
       'shared.quote': SharedQuote;
       'shared.points': SharedPoints;
       'shared.media': SharedMedia;
