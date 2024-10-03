@@ -27,7 +27,10 @@ module.exports = createCoreController('api::library-content.library-content', ({
 
     // Fetch the library content by ID
     const entry = await strapi.db.query('api::library-content.library-content').findOne({
-      where: { id },
+      where: {
+        id,
+        publishedAt: { $notNull: true }
+      },
       populate: ['cover', 'duration', 'points', 'tags', 'category', 'subCategories', 'type', 'body', 'richText', 'author'],  // Use camelCase 'subCategories'
     });
 
@@ -75,8 +78,9 @@ module.exports = createCoreController('api::library-content.library-content', ({
     const { category, tags, subcategories, organization } = ctx.query;
     const userId = ctx.state.user?.id; // Get the user ID from the authenticated session
 
-    // Initialize filters
-    const filters = {};
+    const filters = {
+      publishedAt: { $notNull: true } // Ensure only published content is returned
+    };
 
     // Log the incoming query parameters
     strapi.log.info(`Query params - Category: ${category}, Tags: ${tags}, Subcategories: ${subcategories}, Organization: ${organization}`);
@@ -104,7 +108,6 @@ module.exports = createCoreController('api::library-content.library-content', ({
       if (categoryRecord && !categoryRecord.isDefault) {
         filters.category = { id: categoryRecord.id };
       }
-      // If isDefault is true, no filter for category is applied (search over all categories)
     }
 
     // Handle subcategory filtering
@@ -190,7 +193,8 @@ module.exports = createCoreController('api::library-content.library-content', ({
 
       // Initialize filters for categories, subcategories, and tags
       const filters = {
-        $or: orConditions
+        $or: orConditions,
+        publishedAt: { $notNull: true } // Only include published content
       };
 
       const parseFilter = (filterValue) => {
