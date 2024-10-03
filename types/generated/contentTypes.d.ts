@@ -903,6 +903,8 @@ export interface ApiCategoryCategory extends Schema.CollectionType {
     isDefault: Attribute.Boolean &
       Attribute.Required &
       Attribute.DefaultTo<false>;
+    url: Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
+      Attribute.Required;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
