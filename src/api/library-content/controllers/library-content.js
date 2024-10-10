@@ -179,7 +179,7 @@ module.exports = createCoreController('api::library-content.library-content', ({
 
   async search(ctx) {
     try {
-      const { query, tags, category, subcategory } = ctx.request.query;
+      const { query, tags, category, subcategory, sort } = ctx.request.query;
       const userId = ctx.state.user?.id; // Get the user ID from the authenticated session
 
       if (!query) {
@@ -242,9 +242,12 @@ module.exports = createCoreController('api::library-content.library-content', ({
         }
       }
 
+      const sortOrder = sort || { updatedAt: 'desc' };
+
       // Perform the search across fields, categories, subcategories, and tags
       const entries = await strapi.db.query('api::library-content.library-content').findMany({
         where: filters,
+        orderBy: sortOrder,
         populate: ['cover', 'duration', 'points', 'tags', 'category', 'subCategories', 'type', 'body'],
       });
 
